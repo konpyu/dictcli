@@ -45,22 +45,22 @@
 - [x] Run tests and linting
 
 ## Step 3: Storage Layer
-- [ ] Implement audio cache
-  - [ ] Create AudioCache struct
-  - [ ] Implement SHA256-based key generation
-  - [ ] Add cache hit/miss detection
-  - [ ] Create save/load methods
-- [ ] Implement history storage
-  - [ ] Create History struct
-  - [ ] Implement JSONL append
-  - [ ] Add session save method
-  - [ ] Add query methods for stats
-- [ ] Implement cross-platform audio player
-  - [ ] Detect OS and available players
-  - [ ] Create play method with fallbacks
-  - [ ] Handle player not found errors
-- [ ] Add unit tests for storage components
-- [ ] Run tests and linting
+- [x] Implement audio cache
+  - [x] Create AudioCache struct
+  - [x] Implement SHA256-based key generation
+  - [x] Add cache hit/miss detection
+  - [x] Create save/load methods
+- [x] Implement history storage
+  - [x] Create History struct
+  - [x] Implement JSONL append
+  - [x] Add session save method
+  - [x] Add query methods for stats
+- [x] Implement cross-platform audio player
+  - [x] Detect OS and available players
+  - [x] Create play method with fallbacks
+  - [x] Handle player not found errors
+- [x] Add unit tests for storage components
+- [x] Run tests and linting
 
 ## Step 4: Basic TUI Framework
 - [ ] Create main TUI model structure
