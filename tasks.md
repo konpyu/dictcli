@@ -131,32 +131,32 @@
 - [x] Run tests and linting
 
 ## Step 7: CLI Commands & Flags
-- [ ] Implement main command
-  - [ ] Setup Cobra root command
-  - [ ] Add command description
-  - [ ] Initialize TUI on run
-- [ ] Add CLI flags
-  - [ ] --level flag
-  - [ ] --words flag
-  - [ ] --topic flag
-  - [ ] --voice flag
-  - [ ] --speed flag
-  - [ ] --no-cache flag
-  - [ ] --debug flag
-- [ ] Implement stats command
-  - [ ] Query history data
-  - [ ] Calculate statistics
-  - [ ] Format output nicely
-- [ ] Implement config command
-  - [ ] Display current configuration
-  - [ ] Show config file location
-- [ ] Implement clear-cache command
-  - [ ] Count cached files
-  - [ ] Confirm before deletion
-  - [ ] Delete cache files
-- [ ] Add command help text
-- [ ] Test all CLI commands
-- [ ] Run tests and linting
+- [x] Implement main command
+  - [x] Setup Cobra root command
+  - [x] Add command description
+  - [x] Initialize TUI on run
+- [x] Add CLI flags
+  - [x] --level flag
+  - [x] --words flag
+  - [x] --topic flag
+  - [x] --voice flag
+  - [x] --speed flag
+  - [x] --no-cache flag
+  - [x] --debug flag
+- [x] Implement stats command
+  - [x] Query history data
+  - [x] Calculate statistics
+  - [x] Format output nicely
+- [x] Implement config command
+  - [x] Display current configuration
+  - [x] Show config file location
+- [x] Implement clear-cache command
+  - [x] Count cached files
+  - [x] Confirm before deletion
+  - [x] Delete cache files
+- [x] Add command help text
+- [x] Test all CLI commands
+- [x] Run tests and linting
 
 ## Step 8: History & Statistics
 - [ ] Implement session saving

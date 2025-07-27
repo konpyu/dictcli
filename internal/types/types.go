@@ -77,6 +77,23 @@ const (
 	MaxSpeed = 2.0
 )
 
+var ValidVoices = []string{
+	VoiceAlloy,
+	VoiceEcho,
+	VoiceFable,
+	VoiceOnyx,
+	VoiceNova,
+	VoiceShimmer,
+}
+
+var ValidTopics = []string{
+	TopicBusiness,
+	TopicTravel,
+	TopicDaily,
+	TopicTechnology,
+	TopicHealth,
+}
+
 func ValidateConfig(c *Config) error {
 	if c.Level < MinLevel || c.Level > MaxLevel {
 		c.Level = DefaultLevel
