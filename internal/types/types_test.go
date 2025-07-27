@@ -106,7 +106,10 @@ func TestValidateConfig(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			cfg := tt.config
-			ValidateConfig(&cfg)
+			err := ValidateConfig(&cfg)
+			if err != nil {
+				t.Errorf("ValidateConfig() unexpected error: %v", err)
+			}
 			
 			if cfg.Level != tt.want.Level {
 				t.Errorf("Level = %v, want %v", cfg.Level, tt.want.Level)

@@ -26,23 +26,23 @@
 - [x] Run tests and linting
 
 ## Step 2: Service Layer - OpenAI Integration
-- [ ] Create OpenAI client wrapper
-  - [ ] Initialize client with API key
-  - [ ] Add retry logic with exponential backoff
-- [ ] Implement sentence generation
-  - [ ] Create GenerateSentence function
-  - [ ] Build prompt based on level/topic/word count
-  - [ ] Handle API errors gracefully
-- [ ] Implement text-to-speech
-  - [ ] Create GenerateAudio function
-  - [ ] Support multiple voices
-  - [ ] Support variable speed
-- [ ] Implement grading service
-  - [ ] Create GradeDictation function
-  - [ ] Parse JSON response
-  - [ ] Calculate WER and mistakes
-- [ ] Add unit tests for all service functions
-- [ ] Run tests and linting
+- [x] Create OpenAI client wrapper
+  - [x] Initialize client with API key
+  - [x] Add retry logic with exponential backoff
+- [x] Implement sentence generation
+  - [x] Create GenerateSentence function
+  - [x] Build prompt based on level/topic/word count
+  - [x] Handle API errors gracefully
+- [x] Implement text-to-speech
+  - [x] Create GenerateAudio function
+  - [x] Support multiple voices
+  - [x] Support variable speed
+- [x] Implement grading service
+  - [x] Create GradeDictation function
+  - [x] Parse JSON response
+  - [x] Calculate WER and mistakes
+- [x] Add unit tests for all service functions
+- [x] Run tests and linting
 
 ## Step 3: Storage Layer
 - [ ] Implement audio cache

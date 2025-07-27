@@ -7,12 +7,13 @@ MAIN_PKG=./cmd/dictcli
 
 help:
 	@echo "Available targets:"
-	@echo "  build     - Build the binary"
-	@echo "  test      - Run tests"
-	@echo "  lint      - Run golangci-lint"
-	@echo "  clean     - Clean build artifacts"
-	@echo "  install   - Install the binary"
-	@echo "  run       - Run the application"
+	@echo "  build        - Build the binary"
+	@echo "  test         - Run tests"
+	@echo "  lint         - Run golangci-lint (requires golangci-lint installed)"
+	@echo "  lint-install - Install golangci-lint using go install"
+	@echo "  clean        - Clean build artifacts"
+	@echo "  install      - Install the binary"
+	@echo "  run          - Run the application"
 
 build:
 	$(GO) build $(GOFLAGS) -o $(BINARY_NAME) $(MAIN_PKG)
@@ -27,8 +28,12 @@ test-race:
 	$(GO) test -race ./...
 
 lint:
-	@which golangci-lint > /dev/null || (echo "golangci-lint not found, installing..." && go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest)
+	@which golangci-lint > /dev/null || (echo "Error: golangci-lint not found. Please install it with: brew install golangci-lint" && exit 1)
 	golangci-lint run
+
+lint-install:
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@echo "golangci-lint installed to $$GOPATH/bin"
 
 clean:
 	rm -f $(BINARY_NAME)
