@@ -1,29 +1,29 @@
 # DictCLI Implementation Tasks
 
 ## Step 1: Project Setup & Foundation
-- [ ] Initialize Go project structure
-  - [ ] Create directory structure (cmd/, internal/, etc.)
-  - [ ] Initialize go.mod with module name
-  - [ ] Add .gitignore for Go projects
-- [ ] Setup core dependencies
-  - [ ] Add Bubble Tea framework
-  - [ ] Add OpenAI SDK
-  - [ ] Add Cobra/Viper for CLI
-  - [ ] Add XDG for cross-platform paths
-- [ ] Create basic type definitions
-  - [ ] Define Config struct
-  - [ ] Define DictationSession struct
-  - [ ] Define Grade struct
-  - [ ] Define Mistake struct
-- [ ] Implement configuration management
-  - [ ] Create config loader with Viper
-  - [ ] Setup default values
-  - [ ] Add environment variable support
-- [ ] Setup project Makefile
-  - [ ] Add build target
-  - [ ] Add test target
-  - [ ] Add lint target (golangci-lint)
-- [ ] Run tests and linting
+- [x] Initialize Go project structure
+  - [x] Create directory structure (cmd/, internal/, etc.)
+  - [x] Initialize go.mod with module name
+  - [x] Add .gitignore for Go projects
+- [x] Setup core dependencies
+  - [x] Add Bubble Tea framework
+  - [x] Add OpenAI SDK
+  - [x] Add Cobra/Viper for CLI
+  - [x] Add XDG for cross-platform paths
+- [x] Create basic type definitions
+  - [x] Define Config struct
+  - [x] Define DictationSession struct
+  - [x] Define Grade struct
+  - [x] Define Mistake struct
+- [x] Implement configuration management
+  - [x] Create config loader with Viper
+  - [x] Setup default values
+  - [x] Add environment variable support
+- [x] Setup project Makefile
+  - [x] Add build target
+  - [x] Add test target
+  - [x] Add lint target (golangci-lint)
+- [x] Run tests and linting
 
 ## Step 2: Service Layer - OpenAI Integration
 - [ ] Create OpenAI client wrapper
