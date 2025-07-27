@@ -65,9 +65,9 @@ func TestSettingsKeyHandling(t *testing.T) {
 	}
 
 	// Test Esc key should change state back
-	model.prevState = StateListening
+	m.prevState = StateListening
 	keyMsg = tea.KeyMsg{Type: tea.KeyEsc}
-	updatedModel, _ = model.Update(keyMsg)
+	updatedModel, _ = m.Update(keyMsg)
 	m = updatedModel.(Model)
 	
 	if m.state != StateListening {

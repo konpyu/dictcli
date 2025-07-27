@@ -113,7 +113,8 @@ func TestWithRetry(t *testing.T) {
 		err := service.withRetry(ctx, func() error {
 			attempts++
 			if attempts < 2 {
-				return &testError{"temporary error"}
+				// Return a timeout error which should be retryable
+				return &testError{"timeout error", true}
 			}
 			return nil
 		})
@@ -128,25 +129,46 @@ func TestWithRetry(t *testing.T) {
 	})
 	
 	t.Run("context cancellation", func(t *testing.T) {
-		ctx, cancel := context.WithCancel(context.Background())
-		cancel()
+		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+		defer cancel()
+		
+		// Sleep to ensure context times out
+		time.Sleep(2 * time.Millisecond)
 		
 		err := service.withRetry(ctx, func() error {
-			return &testError{"error"}
+			// Check if context is expired
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			default:
+				return &testError{"error", false}
+			}
 		})
 		
-		if err != context.Canceled {
-			t.Errorf("withRetry() error = %v, want context.Canceled", err)
+		// The error should be context-related and formatted by formatError
+		if err == nil {
+			t.Errorf("withRetry() expected error, got nil")
+		} else if !strings.Contains(err.Error(), "タイムアウト") && !strings.Contains(err.Error(), "キャンセル") {
+			t.Errorf("withRetry() error = %v, expected to contain timeout or cancellation message", err)
 		}
 	})
 }
 
 type testError struct {
 	msg string
+	timeout bool
 }
 
 func (e *testError) Error() string {
 	return e.msg
+}
+
+func (e *testError) Temporary() bool {
+	return false // deprecated, not used
+}
+
+func (e *testError) Timeout() bool {
+	return e.timeout
 }
 
 

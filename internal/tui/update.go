@@ -18,7 +18,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		// Handle global key presses first
-		if newModel, cmd := m.handleGlobalKeys(msg); cmd != nil {
+		if newModel, cmd, handled := m.handleGlobalKeys(msg); handled {
 			return newModel, cmd
 		}
 		// Then let state-specific handlers process the key
@@ -53,23 +53,44 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m.updateShowingResult(msg)
 	case StateSettings:
 		return m.updateSettings(msg)
+	case StateHelp:
+		return m.updateHelp(msg)
 	}
 
 	return m, nil
 }
 
-func (m Model) handleGlobalKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (m Model) handleGlobalKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd, bool) {
 	// Ctrl+C always quits
 	if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+c"))) {
-		return m, tea.Quit
+		return m, tea.Quit, true
 	}
 
-	// Q/q quits in most states (except when typing and in settings)
-	if m.state != StateListening && m.state != StateSettings && key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
-		return m, tea.Quit
+	// Ctrl+Q always quits
+	if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+q"))) {
+		return m, tea.Quit, true
 	}
 
-	return m, nil
+	// Help shortcuts
+	if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+h", "?"))) {
+		newModel, cmd := m.changeState(StateHelp)
+		return newModel, cmd, true
+	}
+
+	// Esc goes back to previous state (except from welcome)
+	if key.Matches(msg, key.NewBinding(key.WithKeys("esc"))) && m.state != StateWelcome {
+		if m.state == StateHelp || m.state == StateSettings {
+			newModel, cmd := m.changeState(m.prevState)
+			return newModel, cmd, true
+		}
+	}
+
+	// Q/q quits in most states (except when typing, settings, or help)
+	if m.state != StateListening && m.state != StateSettings && m.state != StateHelp && key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
+		return m, tea.Quit, true
+	}
+
+	return m, nil, false
 }
 
 func (m Model) handleStateKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
@@ -87,8 +108,8 @@ func (m Model) handleStateKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+s"))) {
 			return m.changeState(StateSettings)
 		}
-		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+q"))) {
-			return m, tea.Quit
+		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+h", "?"))) {
+			return m.changeState(StateHelp)
 		}
 		// Pass through to updateListening for text input
 		return m.updateListening(msg)
@@ -106,11 +127,11 @@ func (m Model) handleStateKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		}
 
 	case StateSettings:
-		if key.Matches(msg, key.NewBinding(key.WithKeys("esc"))) {
-			return m.changeState(m.prevState)
-		}
 		// Pass through to updateSettings for arrow keys, etc.
 		return m.updateSettings(msg)
+
+	case StateHelp:
+		// Help state only responds to global keys (Esc, Ctrl+Q)
 	}
 
 	return m, nil

@@ -5,7 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
+	"net"
 	"os"
+	"strings"
+	"syscall"
 	"time"
 
 	"github.com/konpyu/dictcli/internal/types"
@@ -41,8 +45,13 @@ func (s *OpenAIService) withRetry(ctx context.Context, operation func() error) e
 			return nil
 		}
 		
-		if i == maxRetries-1 {
+		// Don't retry on certain error types
+		if !isRetryableError(err) {
 			return err
+		}
+		
+		if i == maxRetries-1 {
+			return formatError(err)
 		}
 		
 		delay := baseDelay * time.Duration(1<<i)
@@ -52,7 +61,7 @@ func (s *OpenAIService) withRetry(ctx context.Context, operation func() error) e
 		
 		select {
 		case <-ctx.Done():
-			return ctx.Err()
+			return formatError(ctx.Err())
 		case <-time.After(delay):
 		}
 	}
@@ -60,8 +69,108 @@ func (s *OpenAIService) withRetry(ctx context.Context, operation func() error) e
 	return errors.New("max retries exceeded")
 }
 
+// isRetryableError determines if an error should trigger a retry
+func isRetryableError(err error) bool {
+	if err == nil {
+		return false
+	}
+	
+	// Check for network errors
+	var netErr net.Error
+	if errors.As(err, &netErr) {
+		// Retry on timeouts only (Temporary() is deprecated)
+		return netErr.Timeout()
+	}
+	
+	// Check for syscall errors
+	var syscallErr *net.OpError
+	if errors.As(err, &syscallErr) {
+		if syscallErr.Err == syscall.ECONNREFUSED || syscallErr.Err == syscall.ECONNRESET {
+			return true
+		}
+	}
+	
+	// Check for OpenAI API errors
+	var apiErr *openai.APIError
+	if errors.As(err, &apiErr) {
+		// Retry on rate limits and server errors (5xx)
+		return apiErr.HTTPStatusCode == 429 || (apiErr.HTTPStatusCode >= 500 && apiErr.HTTPStatusCode < 600)
+	}
+	
+	// Check for context errors - don't retry
+	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+		return false
+	}
+	
+	// Retry on generic network-related errors
+	errorStr := strings.ToLower(err.Error())
+	return strings.Contains(errorStr, "timeout") || 
+		   strings.Contains(errorStr, "connection refused") ||
+		   strings.Contains(errorStr, "connection reset") ||
+		   strings.Contains(errorStr, "no such host")
+}
+
+// formatError provides user-friendly error messages
+func formatError(err error) error {
+	if err == nil {
+		return nil
+	}
+	
+	// Context errors
+	if errors.Is(err, context.DeadlineExceeded) {
+		return errors.New("リクエストがタイムアウトしました。ネットワーク接続を確認してください")
+	}
+	if errors.Is(err, context.Canceled) {
+		return errors.New("操作がキャンセルされました")
+	}
+	
+	// OpenAI API errors
+	var apiErr *openai.APIError
+	if errors.As(err, &apiErr) {
+		switch apiErr.HTTPStatusCode {
+		case 401:
+			return errors.New("OpenAI APIキーが無効です。OPENAI_API_KEYを確認してください")
+		case 403:
+			return errors.New("OpenAI APIへのアクセスが拒否されました。権限を確認してください")
+		case 429:
+			return errors.New("API利用制限に達しました。しばらく待ってから再試行してください")
+		case 500, 502, 503, 504:
+			return errors.New("OpenAI APIサーバーエラーです。しばらく待ってから再試行してください")
+		default:
+			return fmt.Errorf("OpenAI APIエラー (HTTP %d): %s", apiErr.HTTPStatusCode, apiErr.Message)
+		}
+	}
+	
+	// Network errors
+	var netErr net.Error
+	if errors.As(err, &netErr) {
+		if netErr.Timeout() {
+			return errors.New("ネットワークタイムアウトです。インターネット接続を確認してください")
+		}
+		return errors.New("ネットワークエラーが発生しました。インターネット接続を確認してください")
+	}
+	
+	// Generic network-related errors
+	errorStr := strings.ToLower(err.Error())
+	if strings.Contains(errorStr, "no such host") {
+		return errors.New("ホストが見つかりません。インターネット接続を確認してください")
+	}
+	if strings.Contains(errorStr, "connection refused") {
+		return errors.New("接続が拒否されました。ファイアウォール設定を確認してください")
+	}
+	
+	// Return original error with prefix
+	return fmt.Errorf("予期しないエラーが発生しました: %w", err)
+}
+
 func (s *OpenAIService) GenerateSentence(ctx context.Context, config *types.Config) (string, error) {
+	start := time.Now()
 	prompt := buildSentencePrompt(config)
+	
+	if s.debug {
+		log.Printf("[OpenAI] GenerateSentence request: topic=%s, level=%d, words=%d", 
+			config.Topic, config.Level, config.Words)
+	}
 	
 	var response openai.ChatCompletionResponse
 	err := s.withRetry(ctx, func() error {
@@ -87,6 +196,16 @@ func (s *OpenAIService) GenerateSentence(ctx context.Context, config *types.Conf
 		return err
 	})
 	
+	duration := time.Since(start)
+	if s.debug {
+		if err != nil {
+			log.Printf("[OpenAI] GenerateSentence failed after %v: %v", duration, err)
+		} else {
+			log.Printf("[OpenAI] GenerateSentence success in %v, tokens: %d", 
+				duration, response.Usage.TotalTokens)
+		}
+	}
+	
 	if err != nil {
 		return "", fmt.Errorf("failed to generate sentence: %w", err)
 	}
@@ -99,8 +218,14 @@ func (s *OpenAIService) GenerateSentence(ctx context.Context, config *types.Conf
 }
 
 func (s *OpenAIService) GenerateAudio(ctx context.Context, text string, voice string, speed float64) ([]byte, error) {
+	start := time.Now()
 	if !types.IsValidVoice(voice) {
 		voice = types.VoiceOnyx
+	}
+	
+	if s.debug {
+		log.Printf("[OpenAI] GenerateAudio request: voice=%s, speed=%.1f, text_len=%d", 
+			voice, speed, len(text))
 	}
 	
 	var audioData []byte
@@ -137,6 +262,16 @@ func (s *OpenAIService) GenerateAudio(ctx context.Context, text string, voice st
 		return nil
 	})
 	
+	duration := time.Since(start)
+	if s.debug {
+		if err != nil {
+			log.Printf("[OpenAI] GenerateAudio failed after %v: %v", duration, err)
+		} else {
+			log.Printf("[OpenAI] GenerateAudio success in %v, size=%d bytes", 
+				duration, len(audioData))
+		}
+	}
+	
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate audio: %w", err)
 	}
@@ -145,7 +280,13 @@ func (s *OpenAIService) GenerateAudio(ctx context.Context, text string, voice st
 }
 
 func (s *OpenAIService) GradeDictation(ctx context.Context, reference, userInput string) (*types.Grade, error) {
+	start := time.Now()
 	prompt := buildGradingPrompt(reference, userInput)
+	
+	if s.debug {
+		log.Printf("[OpenAI] GradeDictation request: ref_len=%d, input_len=%d", 
+			len(reference), len(userInput))
+	}
 	
 	var response openai.ChatCompletionResponse
 	err := s.withRetry(ctx, func() error {
@@ -172,6 +313,16 @@ func (s *OpenAIService) GradeDictation(ctx context.Context, reference, userInput
 		return err
 	})
 	
+	duration := time.Since(start)
+	if s.debug {
+		if err != nil {
+			log.Printf("[OpenAI] GradeDictation failed after %v: %v", duration, err)
+		} else {
+			log.Printf("[OpenAI] GradeDictation success in %v, tokens: %d", 
+				duration, response.Usage.TotalTokens)
+		}
+	}
+	
 	if err != nil {
 		return nil, fmt.Errorf("failed to grade dictation: %w", err)
 	}
@@ -183,6 +334,11 @@ func (s *OpenAIService) GradeDictation(ctx context.Context, reference, userInput
 	grade, err := parseGradingResponse(response.Choices[0].Message.Content)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse grading response: %w", err)
+	}
+	
+	if s.debug {
+		log.Printf("[OpenAI] GradeDictation parsed: score=%d, wer=%.3f, mistakes=%d", 
+			grade.Score, grade.WER, len(grade.Mistakes))
 	}
 	
 	return grade, nil

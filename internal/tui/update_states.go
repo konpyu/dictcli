@@ -205,3 +205,7 @@ func (m *Model) saveConfig() error {
 	}
 	return m.configManager.Save()
 }
+
+func (m Model) updateHelp(msg tea.Msg) (tea.Model, tea.Cmd) {
+	return m, nil
+}

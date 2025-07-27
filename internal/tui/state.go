@@ -10,6 +10,7 @@ const (
 	StateGrading
 	StateShowingResult
 	StateSettings
+	StateHelp
 )
 
 func (s State) String() string {
@@ -28,6 +29,8 @@ func (s State) String() string {
 		return "ShowingResult"
 	case StateSettings:
 		return "Settings"
+	case StateHelp:
+		return "Help"
 	default:
 		return "Unknown"
 	}

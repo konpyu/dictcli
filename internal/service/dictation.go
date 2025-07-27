@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
-	"time"
+	"log"
 
 	"github.com/konpyu/dictcli/internal/storage"
 	"github.com/konpyu/dictcli/internal/types"
@@ -33,10 +33,7 @@ func NewDictationService(debug bool) (*DictationService, error) {
 	}, nil
 }
 
-func (s *DictationService) GenerateSentence(topic string, level int, wordCount int) (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-
+func (s *DictationService) GenerateSentence(ctx context.Context, topic string, level int, wordCount int) (string, error) {
 	config := &types.Config{
 		Topic:     topic,
 		Level:     level,
@@ -46,16 +43,17 @@ func (s *DictationService) GenerateSentence(topic string, level int, wordCount i
 	return s.openai.GenerateSentence(ctx, config)
 }
 
-func (s *DictationService) GenerateAudio(text string, voice string, speed float64) (string, error) {
+func (s *DictationService) GenerateAudio(ctx context.Context, text string, voice string, speed float64) (string, error) {
 	if s.cache.Exists(text, voice, speed) {
 		if s.debug {
-			fmt.Println("Audio cache hit")
+			log.Printf("[Cache] Audio cache HIT for voice=%s, speed=%.1f, text_len=%d", voice, speed, len(text))
 		}
 		return s.cache.GetPath(text, voice, speed), nil
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+	if s.debug {
+		log.Printf("[Cache] Audio cache MISS for voice=%s, speed=%.1f, text_len=%d", voice, speed, len(text))
+	}
 
 	audioData, err := s.openai.GenerateAudio(ctx, text, voice, speed)
 	if err != nil {
@@ -63,15 +61,19 @@ func (s *DictationService) GenerateAudio(text string, voice string, speed float6
 	}
 
 	if err := s.cache.Save(text, voice, speed, audioData); err != nil {
+		if s.debug {
+			log.Printf("[Cache] Failed to save audio to cache: %v", err)
+		}
 		return "", fmt.Errorf("failed to save audio to cache: %w", err)
+	}
+
+	if s.debug {
+		log.Printf("[Cache] Audio saved to cache, size=%d bytes", len(audioData))
 	}
 
 	return s.cache.GetPath(text, voice, speed), nil
 }
 
-func (s *DictationService) GradeDictation(reference string, userInput string) (*types.Grade, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-
+func (s *DictationService) GradeDictation(ctx context.Context, reference string, userInput string) (*types.Grade, error) {
 	return s.openai.GradeDictation(ctx, reference, userInput)
 }
