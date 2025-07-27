@@ -287,7 +287,13 @@ func (m Model) viewSettings() string {
 	}
 
 	content.WriteString("\n")
-	content.WriteString(mutedStyle.Render("[Enter] Save & Next Round   [Esc] Cancel"))
+	
+	if m.message != "" {
+		content.WriteString(successStyle.Render(m.message))
+		content.WriteString("\n\n")
+	}
+	
+	content.WriteString(mutedStyle.Render("[Enter] Save & Next Round   [Ctrl+S] Save   [Esc] Cancel"))
 
 	return boxStyle.Width(50).Render(content.String())
 }

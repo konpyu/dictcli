@@ -45,3 +45,6 @@ config.local.yml
 
 # History
 .local/
+
+# Logs
+/logs/

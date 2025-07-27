@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/konpyu/dictcli/internal/logging"
 	"github.com/konpyu/dictcli/internal/types"
 	openai "github.com/sashabaranov/go-openai"
 )
@@ -56,7 +57,7 @@ func (s *OpenAIService) withRetry(ctx context.Context, operation func() error) e
 		
 		delay := baseDelay * time.Duration(1<<i)
 		if s.debug {
-			fmt.Printf("Retry %d/%d after %v due to error: %v\n", i+1, maxRetries, delay, err)
+			logging.Debug("Retry %d/%d after %v due to error: %v", i+1, maxRetries, delay, err)
 		}
 		
 		select {

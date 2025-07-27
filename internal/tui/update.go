@@ -6,6 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/konpyu/dictcli/internal/logging"
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -152,6 +153,10 @@ func (m Model) changeState(newState State) (Model, tea.Cmd) {
 		return m, m.generateAudio
 	case StateGrading:
 		return m, m.gradeDictation
+	case StateSettings:
+		// Debug: Log config when entering settings
+		logging.Debug("Entering settings - Voice: %s, Level: %d, Topic: %s, Words: %d, Speed: %.1f", 
+			m.cfg.Voice, m.cfg.Level, m.cfg.Topic, m.cfg.Words, m.cfg.Speed)
 	}
 
 	return m, nil

@@ -31,6 +31,7 @@ type Model struct {
 	textInput      textinput.Model
 	
 	err            error
+	message        string
 	
 	settingsFields []string
 	settingsIndex  int

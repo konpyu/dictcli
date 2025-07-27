@@ -34,3 +34,5 @@ type stateChangeMsg struct {
 type errMsg struct {
 	err error
 }
+
+type clearMessageMsg struct{}

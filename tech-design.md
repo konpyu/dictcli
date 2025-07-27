@@ -2,6 +2,7 @@
 
 > **Date:** 2025-07-27  
 > **Go Version:** 1.22+  
+> **golangci-lint:** 2.3.0
 > **Architecture:** Simple Three-layer Architecture  
 
 ## 1. Architecture Overview
@@ -116,7 +117,7 @@
 
 ### Grading
 - Model: GPT-4o-mini
-- Temperature: 0
+- Temperature: 0.2
 - JSON response format
 - Evaluates: accuracy, provides Japanese explanations
 
@@ -135,10 +136,10 @@ dictcli clear-cache                # Clear audio cache
 ```
 
 ### Flags
-- `-l, --level` - TOEIC level
-- `-w, --words` - Word count
-- `-t, --topic` - Topic selection
-- `-v, --voice` - Voice selection
+- `-l, --level` - TOEIC level(default: 600)
+- `-w, --words` - Word count(default: 7)
+- `-t, --topic` - Topic selection(default: Business)
+- `-v, --voice` - Voice selection(default: alloy)
 - `-s, --speed` - Speech speed
 - `--no-cache` - Disable caching
 - `--debug` - Debug logging
@@ -182,7 +183,15 @@ dictcli/
 └── go.mod
 ```
 
-## 13. Implementation Notes
+
+## 13. Logging
+
+- Prepare a custom logging infrastructure specifically for UI debugging
+- Save logs under the logs directory
+- When started with --debug, always record details during screen transitions and key operations
+
+
+## 14. Implementation Notes
 
 - Start with core dictation flow (generate → play → input → grade)
 - Add statistics and history as secondary features
@@ -190,3 +199,4 @@ dictcli/
 - Use standard Go error handling patterns
 - Prefer explicit over implicit behavior
 - follow golang best practice
+- The UI (TUI) has higher uncertainty in this case. Prioritize designing the task order to ensure the TUI functions correctly first.
