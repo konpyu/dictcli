@@ -79,13 +79,15 @@ func (m Model) handleStateKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m.changeState(StateGenerating)
 
 	case StateListening:
-		if key.Matches(msg, key.NewBinding(key.WithKeys("r", "R"))) {
+		// Don't handle special keys when text input has focus and user is typing
+		// Only handle special keys with Ctrl modifier
+		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+r"))) {
 			return m.changeState(StatePlaying)
 		}
-		if key.Matches(msg, key.NewBinding(key.WithKeys("s", "S"))) {
+		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+s"))) {
 			return m.changeState(StateSettings)
 		}
-		if key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
+		if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+q"))) {
 			return m, tea.Quit
 		}
 		// Pass through to updateListening for text input

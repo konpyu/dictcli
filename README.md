@@ -67,9 +67,9 @@ export OPENAI_API_KEY="your-api-key-here"
 ### Controls
 
 - **Any key**: Start from welcome screen
-- **R**: Replay audio
-- **S**: Open settings
-- **Q**: Quit (except when typing)
+- **Ctrl+R**: Replay audio (while typing)
+- **Ctrl+S**: Open settings (while typing)
+- **Ctrl+Q**: Quit (while typing)
 - **Ctrl+C**: Force quit
 - **Enter**: Submit answer / Save settings
 - **Esc**: Cancel settings

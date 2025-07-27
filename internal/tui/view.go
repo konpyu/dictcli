@@ -87,7 +87,7 @@ Tips for getting started:
 • Listen carefully to the audio
 • Type what you hear
 • Get instant feedback in Japanese
-• Press 'R' to replay audio anytime`)
+• Press 'Ctrl+R' to replay audio anytime`)
 
 	return welcome + tips
 }
@@ -114,7 +114,7 @@ func (m Model) viewListening() string {
 	var content strings.Builder
 	content.WriteString(m.header())
 	content.WriteString("\n")
-	content.WriteString(mutedStyle.Render("(🔊 [R]eplay  [S]ettings  [Q]uit)"))
+	content.WriteString(mutedStyle.Render("(🔊 [Ctrl+R]eplay  [Ctrl+S]ettings  [Ctrl+Q]uit)"))
 	content.WriteString("\n\n")
 
 	if m.err != nil {
@@ -177,6 +177,7 @@ func (m Model) viewShowingResult() string {
 			content.WriteString("\n")
 		}
 
+		content.WriteString(fmt.Sprintf("答案: %s\n", m.currentSession.UserInput))
 		content.WriteString(fmt.Sprintf("正解: %s\n", successStyle.Render(m.currentSession.Sentence)))
 
 		if grade.JapaneseExplanation != "" {
