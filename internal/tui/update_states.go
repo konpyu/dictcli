@@ -50,6 +50,9 @@ func (m Model) updatePlaying(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		m.textInput.Reset()
 		m.textInput.Focus()
+		if m.currentSession != nil {
+			m.currentSession.StartTime = time.Now()
+		}
 		return m.changeState(StateListening)
 	}
 	return m, nil
@@ -64,6 +67,10 @@ func (m Model) updateListening(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.userInput != "" && m.currentSession != nil {
 				m.currentSession.UserInput = m.userInput
 				m.currentSession.EndTime = time.Now()
+				if m.currentSession.StartTime.IsZero() {
+					m.currentSession.StartTime = time.Now()
+				}
+				m.currentSession.DurationSecs = m.currentSession.EndTime.Sub(m.currentSession.StartTime).Seconds()
 				return m.changeState(StateGrading)
 			}
 			return m, nil

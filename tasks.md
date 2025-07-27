@@ -83,29 +83,29 @@
 - [x] Run tests and linting
 
 ## Step 5: Core Dictation Flow
-- [ ] Implement sentence generation state
-  - [ ] Show spinner during generation
-  - [ ] Call service layer
-  - [ ] Handle generation errors
-- [ ] Implement audio playback state
-  - [ ] Trigger audio generation
-  - [ ] Play audio automatically
-  - [ ] Show playback status
-- [ ] Implement listening/input state
-  - [ ] Create text input component
-  - [ ] Handle Enter to submit
-  - [ ] Add replay hotkey (R)
-- [ ] Implement grading state
-  - [ ] Show spinner during grading
-  - [ ] Call grading service
-  - [ ] Handle grading errors
-- [ ] Implement result display state
-  - [ ] Show score and WER
-  - [ ] Display mistakes with Japanese explanations
-  - [ ] Show alternative expressions
-  - [ ] Add next/replay options
-- [ ] Integration test full flow
-- [ ] Run tests and linting
+- [x] Implement sentence generation state
+  - [x] Show spinner during generation
+  - [x] Call service layer
+  - [x] Handle generation errors
+- [x] Implement audio playback state
+  - [x] Trigger audio generation
+  - [x] Play audio automatically
+  - [x] Show playback status
+- [x] Implement listening/input state
+  - [x] Create text input component
+  - [x] Handle Enter to submit
+  - [x] Add replay hotkey (R)
+- [x] Implement grading state
+  - [x] Show spinner during grading
+  - [x] Call grading service
+  - [x] Handle grading errors
+- [x] Implement result display state
+  - [x] Show score and WER
+  - [x] Display mistakes with Japanese explanations
+  - [x] Show alternative expressions
+  - [x] Add next/replay options
+- [x] Integration test full flow
+- [x] Run tests and linting
 
 ## Step 6: Settings & Configuration UI
 - [ ] Create settings modal
