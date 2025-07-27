@@ -1,22 +1,28 @@
-.PHONY: build test lint clean install run help
+.PHONY: build build-all test lint clean install run help release
 
 BINARY_NAME=dictcli
 GO=go
 GOFLAGS=-v
 MAIN_PKG=./cmd/dictcli
+DIST_DIR=./dist
 
 help:
 	@echo "Available targets:"
-	@echo "  build        - Build the binary"
+	@echo "  build        - Build the binary for current platform"
+	@echo "  build-all    - Build binaries for all supported platforms"
 	@echo "  test         - Run tests"
 	@echo "  lint         - Run golangci-lint (requires golangci-lint installed)"
 	@echo "  lint-install - Install golangci-lint using go install"
 	@echo "  clean        - Clean build artifacts"
 	@echo "  install      - Install the binary"
 	@echo "  run          - Run the application"
+	@echo "  release      - Build release binaries with version info"
 
 build:
-	$(GO) build $(GOFLAGS) -o $(BINARY_NAME) $(MAIN_PKG)
+	./build.sh
+
+build-all:
+	./build.sh all
 
 test:
 	$(GO) test -v ./...
@@ -37,13 +43,17 @@ lint-install:
 
 clean:
 	rm -f $(BINARY_NAME)
+	rm -rf $(DIST_DIR)
 	$(GO) clean
 
 install:
 	$(GO) install $(GOFLAGS) $(MAIN_PKG)
 
 run: build
-	./$(BINARY_NAME)
+	$(DIST_DIR)/$(BINARY_NAME)
+
+release: clean deps lint test build-all
+	@echo "Release build complete. Binaries available in $(DIST_DIR)/"
 
 deps:
 	$(GO) mod tidy

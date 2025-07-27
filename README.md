@@ -15,17 +15,22 @@ DictCLI provides an interactive Terminal UI (TUI) for English dictation practice
 
 ### Current Implementation Status
 
-✅ **Completed (Steps 1-6)**:
+✅ **Completed (Steps 1-9)**:
 - Foundation and project structure
 - OpenAI integration (sentence generation, TTS, grading)
 - Storage layer (audio cache, session history, cross-platform audio player)
 - Basic TUI framework with Bubble Tea
 - Core dictation flow (generate → play → listen → grade → results)
 - Settings UI with full configuration management
-
-🚧 **In Progress (Step 7)**:
 - CLI commands and flags
 - Statistics and analytics
+- Polish & error handling
+
+🚧 **In Progress (Step 10)**:
+- Final testing & documentation
+- Integration tests
+- Performance testing
+- Cross-platform verification
 
 ## Prerequisites
 
@@ -48,13 +53,21 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 ## Installation
 
+### Option 1: From Source
 ```bash
 git clone https://github.com/konpyu/dictcli.git
 cd dictcli
 make build
 ```
 
-## Usage
+### Option 2: Direct Build
+```bash
+git clone https://github.com/konpyu/dictcli.git
+cd dictcli
+go build -o dictcli ./cmd/dictcli
+```
+
+## Quick Start
 
 ```bash
 # Set your OpenAI API key
@@ -62,6 +75,18 @@ export OPENAI_API_KEY="your-api-key-here"
 
 # Run the application
 ./dictcli
+
+# Or with specific settings
+./dictcli --voice nova --level 600 --topic Business
+
+# View statistics
+./dictcli stats
+
+# View current configuration
+./dictcli config
+
+# Clear audio cache to free space
+./dictcli clear-cache
 ```
 
 ### Controls
@@ -92,6 +117,32 @@ Settings are automatically saved to `~/.config/dictcli/config.yaml`.
 - **Topic**: Business, Travel, Daily, Technology, Health
 - **Word Count**: 5-30 words per sentence
 - **Speech Speed**: 0.5x-2.0x playback speed
+
+### CLI Commands
+
+#### Main Command
+```bash
+dictcli [flags]                    # Launch TUI dictation practice
+```
+
+#### Additional Commands  
+```bash
+dictcli stats [days]               # Show statistics (default: 30 days)
+dictcli config                     # Display current configuration
+dictcli clear-cache                # Clear audio cache
+```
+
+#### Supported Flags
+```bash
+-v, --voice string       Voice selection (alloy, echo, fable, onyx, nova, shimmer)
+-l, --level int          TOEIC level (400-990)
+-t, --topic string       Topic (Business, Travel, Daily, Technology, Health)
+-w, --words int          Word count (5-30)
+-s, --speed float        Speech speed (0.5-2.0)
+    --no-cache           Disable audio caching
+    --debug              Enable debug logging
+-h, --help               Help for dictcli
+```
 
 ## Development
 
@@ -131,6 +182,12 @@ make test-coverage
 
 # Run tests for specific package
 go test -v ./internal/tui/...
+
+# Run integration tests (requires OPENAI_API_KEY)
+go test -v ./test/...
+
+# Run performance benchmarks
+go test -bench=. ./test/...
 ```
 
 ### Project Architecture
@@ -152,6 +209,7 @@ dictcli/
 │   ├── storage/          # Data persistence (cache, history, audio)
 │   ├── tui/              # Terminal UI (Bubble Tea components)
 │   └── types/            # Shared type definitions and validation
+├── test/                  # Integration and performance tests
 ├── CLAUDE.md             # Project instructions for Claude Code
 ├── Makefile              # Build automation and common tasks
 ├── go.mod                # Go module dependencies
@@ -159,6 +217,33 @@ dictcli/
 ├── tech-design.md        # Technical Design Document
 └── tasks.md              # Implementation task checklist
 ```
+
+## Statistics and Analytics
+
+DictCLI automatically tracks your practice sessions and provides detailed statistics:
+
+### Session Tracking
+- Complete session metadata (timing, user input, grading results)
+- Per-topic performance breakdown
+- Common mistakes tracking with frequency analysis
+- Daily progress trends
+
+### Statistics Display
+```bash
+# View last 30 days (default)
+./dictcli stats
+
+# View specific time range
+./dictcli stats 7    # Last 7 days
+./dictcli stats 90   # Last 90 days
+```
+
+### What's Tracked
+- Total sessions and rounds completed
+- Average scores and Word Error Rate (WER)
+- Performance by topic (Business, Travel, etc.)
+- Most common mistakes and corrections
+- Recent daily progress with trends
 
 ## Privacy & Local Storage
 

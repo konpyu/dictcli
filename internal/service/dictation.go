@@ -1,3 +1,4 @@
+// Package service provides the core business logic for dictation practice.
 package service
 
 import (
@@ -9,12 +10,15 @@ import (
 	"github.com/konpyu/dictcli/internal/types"
 )
 
+// DictationService orchestrates the complete dictation practice flow,
+// coordinating sentence generation, audio synthesis, and grading.
 type DictationService struct {
-	openai *OpenAIService
-	cache  *storage.AudioCache
-	debug  bool
+	openai *OpenAIService        // OpenAI API integration
+	cache  *storage.AudioCache   // Audio file caching
+	debug  bool                  // Debug logging enabled
 }
 
+// NewDictationService creates a new dictation service with OpenAI integration and audio caching.
 func NewDictationService(debug bool) (*DictationService, error) {
 	openaiService, err := NewOpenAIService(debug)
 	if err != nil {
@@ -33,16 +37,20 @@ func NewDictationService(debug bool) (*DictationService, error) {
 	}, nil
 }
 
+// GenerateSentence creates a new sentence for dictation practice based on the specified parameters.
+// The sentence complexity is adjusted based on the TOEIC level, and content is themed around the specified topic.
 func (s *DictationService) GenerateSentence(ctx context.Context, topic string, level int, wordCount int) (string, error) {
 	config := &types.Config{
-		Topic:     topic,
-		Level:     level,
+		Topic: topic,
+		Level: level,
 		Words: wordCount,
 	}
 
 	return s.openai.GenerateSentence(ctx, config)
 }
 
+// GenerateAudio creates audio for the given text using TTS, with intelligent caching to minimize API calls.
+// Returns the file path to the generated audio. If audio is already cached, returns immediately.
 func (s *DictationService) GenerateAudio(ctx context.Context, text string, voice string, speed float64) (string, error) {
 	if s.cache.Exists(text, voice, speed) {
 		if s.debug {
@@ -74,6 +82,8 @@ func (s *DictationService) GenerateAudio(ctx context.Context, text string, voice
 	return s.cache.GetPath(text, voice, speed), nil
 }
 
+// GradeDictation evaluates the user's input against the reference sentence,
+// providing detailed feedback including score, error analysis, and Japanese explanations.
 func (s *DictationService) GradeDictation(ctx context.Context, reference string, userInput string) (*types.Grade, error) {
 	return s.openai.GradeDictation(ctx, reference, userInput)
 }
