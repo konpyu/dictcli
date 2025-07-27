@@ -5,6 +5,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/konpyu/dictcli/internal/config"
 	"github.com/konpyu/dictcli/internal/service"
 	"github.com/konpyu/dictcli/internal/storage"
 	"github.com/konpyu/dictcli/internal/types"
@@ -18,6 +19,7 @@ type Model struct {
 	height        int
 	
 	cfg           *types.Config
+	configManager *config.Manager
 	service       *service.DictationService
 	history       *storage.History
 	audioPlayer   *storage.AudioPlayer
@@ -34,7 +36,7 @@ type Model struct {
 	settingsIndex  int
 }
 
-func New(cfg *types.Config, service *service.DictationService, history *storage.History, player *storage.AudioPlayer) Model {
+func New(configManager *config.Manager, service *service.DictationService, history *storage.History, player *storage.AudioPlayer) Model {
 	s := spinner.New()
 	s.Spinner = spinner.Dot
 	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
@@ -46,13 +48,14 @@ func New(cfg *types.Config, service *service.DictationService, history *storage.
 	ti.Width = 80
 	
 	return Model{
-		state:        StateWelcome,
-		cfg:          cfg,
-		service:      service,
-		history:      history,
-		audioPlayer:  player,
-		spinner:      s,
-		textInput:    ti,
+		state:         StateWelcome,
+		cfg:           configManager.Get(),
+		configManager: configManager,
+		service:       service,
+		history:       history,
+		audioPlayer:   player,
+		spinner:       s,
+		textInput:     ti,
 		settingsFields: []string{"voice", "level", "topic", "words", "speed"},
 	}
 }
@@ -62,4 +65,9 @@ func (m Model) Init() tea.Cmd {
 		m.spinner.Tick,
 		textinput.Blink,
 	)
+}
+
+// SetState sets the current state (for testing)
+func (m *Model) SetState(state State) {
+	m.state = state
 }

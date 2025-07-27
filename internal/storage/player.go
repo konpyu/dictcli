@@ -54,7 +54,8 @@ func (p *AudioPlayer) Play(filePath string) error {
 		args = append(p.args, filePath)
 	}
 
-	cmd := exec.Command(p.command, args...)
+	// G204: This is intentional - we need to launch system audio players
+	cmd := exec.Command(p.command, args...) // #nosec G204
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Start(); err != nil {
@@ -76,7 +77,8 @@ func (p *AudioPlayer) PlayAsync(filePath string) error {
 		args = append(p.args, filePath)
 	}
 
-	cmd := exec.Command(p.command, args...)
+	// G204: This is intentional - we need to launch system audio players
+	cmd := exec.Command(p.command, args...) // #nosec G204
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Start(); err != nil {

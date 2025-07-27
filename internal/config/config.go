@@ -22,7 +22,7 @@ func New() (*Manager, error) {
 	v.SetConfigType("yaml")
 	
 	configDir := filepath.Join(xdg.ConfigHome, "dictcli")
-	if err := os.MkdirAll(configDir, 0755); err != nil {
+	if err := os.MkdirAll(configDir, 0750); err != nil {
 		return nil, fmt.Errorf("failed to create config directory: %w", err)
 	}
 	
@@ -83,7 +83,12 @@ func (m *Manager) Save() error {
 	configDir := filepath.Join(xdg.ConfigHome, "dictcli")
 	configPath := filepath.Join(configDir, "config.yaml")
 	
-	if err := m.viper.WriteConfigAs(configPath); err != nil {
+	if err := os.MkdirAll(configDir, 0750); err != nil {
+		return fmt.Errorf("failed to create config directory: %w", err)
+	}
+	
+	m.viper.SetConfigFile(configPath)
+	if err := m.viper.WriteConfig(); err != nil {
 		return fmt.Errorf("failed to save config: %w", err)
 	}
 	

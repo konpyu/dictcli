@@ -16,7 +16,7 @@ type AudioCache struct {
 
 func NewAudioCache() (*AudioCache, error) {
 	cacheDir := filepath.Join(xdg.CacheHome, "dictcli", "audio")
-	if err := os.MkdirAll(cacheDir, 0755); err != nil {
+	if err := os.MkdirAll(cacheDir, 0750); err != nil {
 		return nil, fmt.Errorf("failed to create cache directory: %w", err)
 	}
 
@@ -44,18 +44,18 @@ func (c *AudioCache) Exists(text string, voice string, speed float64) bool {
 
 func (c *AudioCache) Save(text string, voice string, speed float64, data []byte) error {
 	path := c.GetPath(text, voice, speed)
-	return os.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0600)
 }
 
 func (c *AudioCache) Load(text string, voice string, speed float64) ([]byte, error) {
 	path := c.GetPath(text, voice, speed)
-	return os.ReadFile(path)
+	return os.ReadFile(path) // #nosec G304
 }
 
 func (c *AudioCache) SaveFromReader(text string, voice string, speed float64, reader io.Reader) error {
 	path := c.GetPath(text, voice, speed)
 	
-	file, err := os.Create(path)
+	file, err := os.Create(path) // #nosec G304
 	if err != nil {
 		return fmt.Errorf("failed to create cache file: %w", err)
 	}

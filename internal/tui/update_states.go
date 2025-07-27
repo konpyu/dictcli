@@ -127,6 +127,10 @@ func (m Model) updateSettings(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyRight:
 			m.adjustSetting(1)
 		case tea.KeyEnter:
+			if err := m.saveConfig(); err != nil {
+				m.err = err
+				return m, nil
+			}
 			return m.changeState(StateGenerating)
 		}
 	}
@@ -181,4 +185,23 @@ func indexOf(slice []string, item string) int {
 		}
 	}
 	return 0
+}
+
+func (m *Model) saveConfig() error {
+	if err := m.configManager.Set("voice", m.cfg.Voice); err != nil {
+		return err
+	}
+	if err := m.configManager.Set("level", m.cfg.Level); err != nil {
+		return err
+	}
+	if err := m.configManager.Set("topic", m.cfg.Topic); err != nil {
+		return err
+	}
+	if err := m.configManager.Set("words", m.cfg.Words); err != nil {
+		return err
+	}
+	if err := m.configManager.Set("speed", m.cfg.Speed); err != nil {
+		return err
+	}
+	return m.configManager.Save()
 }

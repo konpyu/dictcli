@@ -29,7 +29,7 @@ test-race:
 
 lint:
 	@which golangci-lint > /dev/null || (echo "Error: golangci-lint not found. Please install it with: brew install golangci-lint" && exit 1)
-	golangci-lint run
+	golangci-lint run --enable=gosec --enable=staticcheck
 
 lint-install:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest

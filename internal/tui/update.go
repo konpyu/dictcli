@@ -17,7 +17,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 
 	case tea.KeyMsg:
-		return m.handleKeyPress(msg)
+		// Handle global key presses first
+		if newModel, cmd := m.handleGlobalKeys(msg); cmd != nil {
+			return newModel, cmd
+		}
+		// Then let state-specific handlers process the key
+		return m.handleStateKeys(msg)
 
 	case spinner.TickMsg:
 		var cmd tea.Cmd
@@ -53,17 +58,21 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m Model) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (m Model) handleGlobalKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	// Ctrl+C always quits
 	if key.Matches(msg, key.NewBinding(key.WithKeys("ctrl+c"))) {
 		return m, tea.Quit
 	}
 
-	// Q/q quits in most states (except when typing)
-	if m.state != StateListening && key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
+	// Q/q quits in most states (except when typing and in settings)
+	if m.state != StateListening && m.state != StateSettings && key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
 		return m, tea.Quit
 	}
 
+	return m, nil
+}
+
+func (m Model) handleStateKeys(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch m.state {
 	case StateWelcome:
 		m.welcomeShown = true
@@ -79,6 +88,8 @@ func (m Model) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		if key.Matches(msg, key.NewBinding(key.WithKeys("q", "Q"))) {
 			return m, tea.Quit
 		}
+		// Pass through to updateListening for text input
+		return m.updateListening(msg)
 
 	case StateShowingResult:
 		switch strings.ToLower(msg.String()) {
@@ -96,6 +107,8 @@ func (m Model) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		if key.Matches(msg, key.NewBinding(key.WithKeys("esc"))) {
 			return m.changeState(m.prevState)
 		}
+		// Pass through to updateSettings for arrow keys, etc.
+		return m.updateSettings(msg)
 	}
 
 	return m, nil

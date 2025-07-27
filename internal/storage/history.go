@@ -18,7 +18,7 @@ type History struct {
 
 func NewHistory() (*History, error) {
 	dataDir := filepath.Join(xdg.DataHome, "dictcli")
-	if err := os.MkdirAll(dataDir, 0755); err != nil {
+	if err := os.MkdirAll(dataDir, 0750); err != nil {
 		return nil, fmt.Errorf("failed to create data directory: %w", err)
 	}
 
@@ -28,7 +28,7 @@ func NewHistory() (*History, error) {
 }
 
 func (h *History) SaveSession(session *types.DictationSession) error {
-	file, err := os.OpenFile(h.filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(h.filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 	if err != nil {
 		return fmt.Errorf("failed to open history file: %w", err)
 	}

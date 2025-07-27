@@ -15,7 +15,7 @@ func TestHistory(t *testing.T) {
 		tempDir := t.TempDir()
 		dataDir := filepath.Join(tempDir, "dictcli")
 		
-		err := os.MkdirAll(dataDir, 0755)
+		err := os.MkdirAll(dataDir, 0750)
 		if err != nil {
 			t.Fatalf("Failed to create test data directory: %v", err)
 		}

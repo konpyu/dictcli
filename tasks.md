@@ -108,27 +108,27 @@
 - [x] Run tests and linting
 
 ## Step 6: Settings & Configuration UI
-- [ ] Create settings modal
-  - [ ] Design settings layout
-  - [ ] Add navigation with arrow keys
-  - [ ] Implement value adjustment
-- [ ] Add voice selection
-  - [ ] List available voices
-  - [ ] Update config on change
-- [ ] Add level selection
-  - [ ] Support TOEIC levels 400-990
-  - [ ] Validate input range
-- [ ] Add topic selection
-  - [ ] Show topic list
-  - [ ] Cycle through options
-- [ ] Add word count adjustment
-  - [ ] Support 5-30 words
-  - [ ] Use +/- keys
-- [ ] Persist settings changes
-  - [ ] Save to config file
-  - [ ] Apply immediately
-- [ ] Test settings persistence
-- [ ] Run tests and linting
+- [x] Create settings modal
+  - [x] Design settings layout
+  - [x] Add navigation with arrow keys
+  - [x] Implement value adjustment
+- [x] Add voice selection
+  - [x] List available voices
+  - [x] Update config on change
+- [x] Add level selection
+  - [x] Support TOEIC levels 400-990
+  - [x] Validate input range
+- [x] Add topic selection
+  - [x] Show topic list
+  - [x] Cycle through options
+- [x] Add word count adjustment
+  - [x] Support 5-30 words
+  - [x] Use +/- keys
+- [x] Persist settings changes
+  - [x] Save to config file
+  - [x] Apply immediately
+- [x] Test settings persistence
+- [x] Run tests and linting
 
 ## Step 7: CLI Commands & Flags
 - [ ] Implement main command

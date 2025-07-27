@@ -14,7 +14,7 @@ func TestAudioCache(t *testing.T) {
 			baseDir: filepath.Join(tempDir, "dictcli", "audio"),
 		}
 		
-		err := os.MkdirAll(cache.baseDir, 0755)
+		err := os.MkdirAll(cache.baseDir, 0750)
 		if err != nil {
 			t.Fatalf("Failed to create test cache directory: %v", err)
 		}

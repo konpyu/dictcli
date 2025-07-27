@@ -44,7 +44,7 @@ type Grade struct {
 }
 
 const (
-	DefaultVoice  = "TOM"
+	DefaultVoice  = "alloy"
 	DefaultLevel  = 700
 	DefaultTopic  = "Business"
 	DefaultWords  = 15
