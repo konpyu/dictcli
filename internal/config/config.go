@@ -118,3 +118,11 @@ func (m *Manager) SetFromFlags(voice, topic string, level, words int, speed floa
 func GetDefaultConfigPath() string {
 	return filepath.Join(xdg.ConfigHome, "dictcli", "config.yaml")
 }
+
+func Load() (*types.Config, error) {
+	manager, err := New()
+	if err != nil {
+		return nil, err
+	}
+	return manager.Get(), nil
+}

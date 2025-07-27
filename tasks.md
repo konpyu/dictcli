@@ -63,24 +63,24 @@
 - [x] Run tests and linting
 
 ## Step 4: Basic TUI Framework
-- [ ] Create main TUI model structure
-  - [ ] Define state enum
-  - [ ] Create Model struct
-  - [ ] Initialize Bubble Tea components
-- [ ] Implement state management
-  - [ ] Create state transition logic
-  - [ ] Handle keyboard input
-  - [ ] Add quit functionality
-- [ ] Create basic view rendering
-  - [ ] Implement View() method
-  - [ ] Add header with settings display
-  - [ ] Create state-specific views
-- [ ] Setup basic update cycle
-  - [ ] Handle tea.Msg types
-  - [ ] Route to state handlers
-  - [ ] Update UI components
-- [ ] Test TUI navigation flow
-- [ ] Run tests and linting
+- [x] Create main TUI model structure
+  - [x] Define state enum
+  - [x] Create Model struct
+  - [x] Initialize Bubble Tea components
+- [x] Implement state management
+  - [x] Create state transition logic
+  - [x] Handle keyboard input
+  - [x] Add quit functionality
+- [x] Create basic view rendering
+  - [x] Implement View() method
+  - [x] Add header with settings display
+  - [x] Create state-specific views
+- [x] Setup basic update cycle
+  - [x] Handle tea.Msg types
+  - [x] Route to state handlers
+  - [x] Update UI components
+- [x] Test TUI navigation flow
+- [x] Run tests and linting
 
 ## Step 5: Core Dictation Flow
 - [ ] Implement sentence generation state
