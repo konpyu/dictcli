@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"time"
 
 	"github.com/adrg/xdg"
@@ -158,6 +159,7 @@ func (h *History) CalculateStatistics(days int) (*Statistics, error) {
 
 	for _, session := range sessions {
 		stats.TotalSessions++
+		stats.TotalRounds++ // Each session is one round
 		
 		if session.Grade != nil {
 			totalScore += float64(session.Grade.Score)
@@ -217,6 +219,16 @@ func (h *History) CalculateStatistics(days int) (*Statistics, error) {
 	for _, daily := range dailyMap {
 		stats.RecentProgress = append(stats.RecentProgress, *daily)
 	}
+
+	// Sort common mistakes by frequency (descending)
+	sort.Slice(stats.CommonMistakes, func(i, j int) bool {
+		return stats.CommonMistakes[i].Frequency > stats.CommonMistakes[j].Frequency
+	})
+
+	// Sort recent progress by date (ascending)
+	sort.Slice(stats.RecentProgress, func(i, j int) bool {
+		return stats.RecentProgress[i].Date.Before(stats.RecentProgress[j].Date)
+	})
 
 	return stats, nil
 }

@@ -159,24 +159,24 @@
 - [x] Run tests and linting
 
 ## Step 8: History & Statistics
-- [ ] Implement session saving
-  - [ ] Save after each round
-  - [ ] Include all session data
-  - [ ] Handle save errors
-- [ ] Create statistics calculator
-  - [ ] Calculate average scores
-  - [ ] Track progress over time
-  - [ ] Find common mistakes
-- [ ] Implement stats display
-  - [ ] Overall statistics
-  - [ ] Topic breakdown
-  - [ ] Common mistakes
-  - [ ] Recent progress
-- [ ] Add date range filtering
-  - [ ] Support custom day ranges
-  - [ ] Default to 30 days
-- [ ] Test statistics accuracy
-- [ ] Run tests and linting
+- [x] Implement session saving
+  - [x] Save after each round
+  - [x] Include all session data
+  - [x] Handle save errors
+- [x] Create statistics calculator
+  - [x] Calculate average scores
+  - [x] Track progress over time
+  - [x] Find common mistakes
+- [x] Implement stats display
+  - [x] Overall statistics
+  - [x] Topic breakdown
+  - [x] Common mistakes
+  - [x] Recent progress
+- [x] Add date range filtering
+  - [x] Support custom day ranges
+  - [x] Default to 30 days
+- [x] Test statistics accuracy
+- [x] Run tests and linting
 
 ## Step 9: Polish & Error Handling
 - [ ] Add comprehensive error handling
