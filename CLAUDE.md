@@ -70,7 +70,7 @@ DictCLI is a Go-based Terminal UI (TUI) application for English dictation practi
 
 3. **Storage Layer** (`internal/storage/`)
    - `AudioCache`: SHA256-based caching for TTS audio files (XDG-compliant paths)
-   - `History`: JSONL-based session logging for statistics and progress tracking
+   - `History`: JSONL-based session logging for statistics and progress tracking with comprehensive statistics calculation
    - `AudioPlayer`: Cross-platform audio playback (afplay/mpg123/powershell)
 
 ### Key Data Structures (`internal/types/`)
@@ -130,6 +130,13 @@ The TUI uses a finite state machine pattern. Each state has specific responsibil
 dictcli [flags]  # Launch TUI dictation practice
 ```
 
+### Additional Commands
+```bash
+dictcli stats [days]               # Show statistics (default: 30 days)
+dictcli config                     # Display current configuration
+dictcli clear-cache                # Clear audio cache
+```
+
 ### Supported Flags
 - `-v, --voice`: Voice selection (alloy, echo, fable, onyx, nova, shimmer)
 - `-l, --level`: TOEIC level (400-990)  
@@ -164,7 +171,23 @@ dictcli/
 
 ## Current Implementation Status
 
-The project has completed Steps 1-4 from the implementation plan:
+The project has completed Steps 1-8 from the implementation plan:
 - Foundation, OpenAI integration, storage layer, and basic TUI framework are complete
-- Core dictation flow (Step 5) is in progress
+- Core dictation flow, settings UI, CLI commands, and history/statistics are complete
+- Session saving, statistics calculation, and CLI stats command are implemented
+- Ready for Step 9 (Polish & Error Handling) and Step 10 (Final Testing & Documentation)
 - See `tasks.md` for detailed implementation checklist
+
+## Statistics and History
+
+### Session Tracking
+- Automatic saving of each dictation round with complete session metadata
+- Timing data (start/end time, duration), user input, grading results
+- Session data stored in JSONL format for efficient querying
+
+### Statistics Features
+- Overall statistics: total sessions/rounds, average score and WER
+- Topic breakdown: per-topic performance metrics
+- Common mistakes tracking: frequency analysis of repeated errors
+- Date range filtering: customizable lookback periods (default 30 days)
+- Recent progress: daily performance trends
