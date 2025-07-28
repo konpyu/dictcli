@@ -48,3 +48,5 @@ config.local.yml
 
 # Logs
 /logs/
+logs/
+*.log

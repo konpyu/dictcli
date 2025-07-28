@@ -1,0 +1,60 @@
+run:
+  timeout: 5m
+  tests: true
+  skip-dirs:
+    - vendor
+    - third_party
+  skip-files:
+    - ".*\\.pb\\.go$"
+
+linters:
+  enable:
+    - gofmt
+    - golint
+    - govet
+    - gosec
+    - ineffassign
+    - misspell
+    - unconvert
+    - goconst
+    - gocyclo
+    - gocognit
+    - bodyclose
+    - gosimple
+    - staticcheck
+    - typecheck
+    - unused
+    - errcheck
+    - revive
+
+linters-settings:
+  gofmt:
+    simplify: true
+  golint:
+    min-confidence: 0.8
+  govet:
+    check-shadowing: true
+  gosec:
+    severity: HIGH
+    confidence: HIGH
+  gocyclo:
+    min-complexity: 15
+  gocognit:
+    min-complexity: 20
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  misspell:
+    locale: US
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+        - errcheck
+    - path: internal/logger/
+      linters:
+        - errcheck
+  max-issues-per-linter: 50
+  max-same-issues: 5
