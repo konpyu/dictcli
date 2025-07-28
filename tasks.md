@@ -49,29 +49,29 @@
 
 ## Step 4: TUI Implementation (Priority)
 
-- [ ] Create TUI package structure (`internal/tui/`)
-  - [ ] `model.go` - Main model with state management
-  - [ ] `update.go` - Message handling and state transitions
-  - [ ] `view.go` - Rendering logic for each state
-  - [ ] `styles.go` - Consistent styling definitions
-  - [ ] `messages.go` - Message types for bubble tea
-- [ ] Implement all TUI states
-  - [ ] StateWelcome - Welcome screen with tips
-  - [ ] StateGenerating - Loading animation while generating
-  - [ ] StatePlaying - Audio playback indicator
-  - [ ] StateListening - Input field for dictation
-  - [ ] StateGrading - Loading while grading
-  - [ ] StateShowingResult - Result display with Japanese feedback
-  - [ ] StateSettings - Settings modal with arrow key navigation
-- [ ] Implement keyboard shortcuts
-  - [ ] R - Replay audio
-  - [ ] S - Open settings
-  - [ ] Q - Quit application
-  - [ ] N - Next round (and Show answer)
-  - [ ] Enter - Submit input
-  - [ ] Esc - Cancel/back
-- [ ] Add proper error handling and user feedback
-- [ ] Test all state transitions thoroughly
+- [x] Create TUI package structure (`internal/tui/`)
+  - [x] `model.go` - Main model with state management
+  - [x] `update.go` - Message handling and state transitions
+  - [x] `view.go` - Rendering logic for each state
+  - [x] `styles.go` - Consistent styling definitions
+  - [x] `messages.go` - Message types for bubble tea
+- [x] Implement all TUI states
+  - [x] StateWelcome - Welcome screen with tips
+  - [x] StateGenerating - Loading animation while generating
+  - [x] StatePlaying - Audio playback indicator
+  - [x] StateListening - Input field for dictation
+  - [x] StateGrading - Loading while grading
+  - [x] StateShowingResult - Result display with Japanese feedback
+  - [x] StateSettings - Settings modal with arrow key navigation
+- [x] Implement keyboard shortcuts
+  - [x] R - Replay audio
+  - [x] S - Open settings
+  - [x] Q - Quit application
+  - [x] N - Next round (and Show answer)
+  - [x] Enter - Submit input
+  - [x] Esc - Cancel/back
+- [x] Add proper error handling and user feedback
+- [x] Test all state transitions thoroughly
 
 ## Step 5: Mock Service Layer
 
