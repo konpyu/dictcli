@@ -75,18 +75,18 @@
 
 ## Step 5: Mock Service Layer
 
-- [ ] Create mock implementations (`internal/service/mock/`)
-  - [ ] MockDictationService
-    - [ ] GenerateSentence - Return predefined sentences
-    - [ ] GenerateAudio - Return dummy audio file path
-    - [ ] GradeDictation - Return fake grading results with Japanese
-  - [ ] MockAudioPlayer - Log play commands without actual playback
-  - [ ] MockAudioCache - Simulate cache hits/misses
-- [ ] Create test data
-  - [ ] Sample sentences for different levels/topics
-  - [ ] Sample grading results with various mistake types
-  - [ ] Japanese explanations for common errors
-- [ ] Wire mock services into TUI for testing
+- [x] Create mock implementations (`internal/service/mock/`)
+  - [x] MockDictationService
+    - [x] GenerateSentence - Return predefined sentences
+    - [x] GenerateAudio - Return dummy audio file path
+    - [x] GradeDictation - Return fake grading results with Japanese
+  - [x] MockAudioPlayer - Log play commands without actual playback
+  - [x] MockAudioCache - Simulate cache hits/misses
+- [x] Create test data
+  - [x] Sample sentences for different levels/topics
+  - [x] Sample grading results with various mistake types
+  - [x] Japanese explanations for common errors
+- [x] Wire mock services into TUI for testing
 
 ## Step 6: Configuration Management
 
