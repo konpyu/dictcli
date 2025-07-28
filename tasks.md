@@ -23,16 +23,16 @@
 
 ## Step 2: Logging Infrastructure
 
-- [ ] Create custom logger package (`internal/logger/`)
-  - [ ] Implement file-based logging with rotation
-  - [ ] Add log levels (DEBUG, INFO, WARN, ERROR)
-  - [ ] Create structured logging format for TUI debugging
-  - [ ] Implement conditional logging based on --debug flag
-- [ ] Set up logs directory structure
-  - [ ] Create logs/ directory in project root
-  - [ ] Implement log file naming with timestamps
-- [ ] Add logging points for TUI state transitions
-- [ ] Test logging with sample debug messages
+- [x] Create custom logger package (`internal/logger/`)
+  - [x] Implement file-based logging with rotation
+  - [x] Add log levels (DEBUG, INFO, WARN, ERROR)
+  - [x] Create structured logging format for TUI debugging
+  - [x] Implement conditional logging based on --debug flag
+- [x] Set up logs directory structure
+  - [x] Create logs/ directory in project root
+  - [x] Implement log file naming with timestamps
+- [x] Add logging points for TUI state transitions
+- [x] Test logging with sample debug messages
 
 ## Step 3: Core Types and Interfaces
 
