@@ -13,10 +13,15 @@ import (
 // Level represents the severity of a log message
 type Level int
 
+// Log levels
 const (
+	// DEBUG is the lowest log level for debugging
 	DEBUG Level = iota
+	// INFO is the standard log level for informational messages
 	INFO
+	// WARN is for warning messages
 	WARN
+	// ERROR is for error messages
 	ERROR
 )
 
@@ -76,7 +81,7 @@ func New(debugMode bool, logDir string) (*Logger, error) {
 	}
 
 	// Create logs directory if it doesn't exist
-	if err := os.MkdirAll(logDir, 0755); err != nil {
+	if err := os.MkdirAll(logDir, 0750); err != nil {
 		return nil, fmt.Errorf("failed to create log directory: %w", err)
 	}
 
@@ -101,10 +106,10 @@ func (l *Logger) openLogFile() error {
 	// Generate filename with timestamp
 	timestamp := time.Now().Format("2006-01-02_15-04-05")
 	filename := fmt.Sprintf("dictcli_%s.log", timestamp)
-	filepath := filepath.Join(l.logDir, filename)
+	logPath := filepath.Join(l.logDir, filename)
 
 	// Open file for writing
-	file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	file, err := os.OpenFile(filepath.Clean(logPath), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
 	if err != nil {
 		return fmt.Errorf("failed to open log file: %w", err)
 	}

@@ -36,16 +36,16 @@
 
 ## Step 3: Core Types and Interfaces
 
-- [ ] Define core data structures (`internal/types/`)
-  - [ ] DictationSession struct
-  - [ ] Grade struct with Japanese explanation fields
-  - [ ] Config struct with all settings
-  - [ ] Mistake struct for error tracking
-- [ ] Create service interfaces
-  - [ ] DictationService interface
-  - [ ] AudioPlayer interface
-  - [ ] AudioCache interface
-  - [ ] Storage interface
+- [x] Define core data structures (`internal/types/`)
+  - [x] DictationSession struct
+  - [x] Grade struct with Japanese explanation fields
+  - [x] Config struct with all settings
+  - [x] Mistake struct for error tracking
+- [x] Create service interfaces
+  - [x] DictationService interface
+  - [x] AudioPlayer interface
+  - [x] AudioCache interface
+  - [x] Storage interface
 
 ## Step 4: TUI Implementation (Priority)
 
@@ -227,3 +227,7 @@
 - [ ] Settings persist between sessions
 - [ ] History tracking works accurately
 - [ ] API errors are handled gracefully
+
+## Important!
+
+- After completing each STEP, ensure that `make all` passes successfully. Passing is the condition for completion.

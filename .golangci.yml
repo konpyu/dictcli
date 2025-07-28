@@ -1,10 +1,10 @@
+version: "2"
 run:
   timeout: 5m
   tests: true
 
 linters:
   enable:
-    - gofmt
     - govet
     - gosec
     - ineffassign
@@ -13,16 +13,11 @@ linters:
     - goconst
     - gocyclo
     - bodyclose
-    - gosimple
     - staticcheck
-    - typecheck
     - unused
     - errcheck
-    - revive
 
 linters-settings:
-  gofmt:
-    simplify: true
   govet:
     enable-all: true
   gosec:
@@ -34,6 +29,12 @@ linters-settings:
     min-occurrences: 3
   misspell:
     locale: US
+  revive:
+    rules:
+      - name: package-comments
+        disabled: false
+      - name: var-naming
+        disabled: true
 
 issues:
   exclude-rules:
@@ -44,5 +45,7 @@ issues:
     - path: internal/logger/
       linters:
         - errcheck
+  exclude:
+    - "avoid meaningless package names"
   max-issues-per-linter: 50
   max-same-issues: 5

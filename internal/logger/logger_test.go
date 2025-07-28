@@ -82,7 +82,8 @@ func TestLogger(t *testing.T) {
 	// Read and verify log content
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".log" {
-			content, err := os.ReadFile(filepath.Join(tmpDir, file.Name()))
+			filePath := filepath.Join(tmpDir, file.Name())
+			content, err := os.ReadFile(filepath.Clean(filePath))
 			if err != nil {
 				t.Errorf("Failed to read log file: %v", err)
 				continue
