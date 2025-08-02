@@ -1,0 +1,53 @@
+# Source files
+src/
+tests/
+
+# Development files
+.git/
+.gitignore
+.eslintrc.js
+eslint.config.js
+.prettierrc
+vitest.config.ts
+tsconfig.json
+
+# Documentation source
+*.md
+!README.md
+!CHANGELOG.md
+
+# Test files
+test-*.ts
+test-*.js
+*.test.ts
+*.test.tsx
+
+# Build artifacts
+coverage/
+.vitest/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.temp
+sample-*.mp3

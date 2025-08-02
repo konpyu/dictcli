@@ -1,0 +1,100 @@
+Just before the meeting starts
+The meeting started later than scheduled
+Kick-off meeting for a new project
+Asked for opinion during the meeting
+Different opinions emerged in the meeting
+Confirming decisions made in the meeting
+Assigning tasks for next meeting
+The meeting is running long
+Meeting participants haven't all arrived
+Switching the meeting to online
+First customer visit
+Regular meeting with existing customer
+New service proposal presentation
+Contract terms negotiation
+Sending revised contract
+Requested to shorten delivery time
+Complaint handling (delivery delay)
+Complaint handling (quality issues)
+Upsell/cross-sell proposal
+Contract renewal inquiry
+Welcoming a new team member
+Team member resignation announcement
+Task progress check
+Task prioritization
+Subordinate performance evaluation
+Mediating conflicts between members
+Assigning tasks with tight deadlines
+Urgent task interruption
+Expressing gratitude to members
+Sharing team goals
+Project planning
+Milestone delay
+Resource shortage discovered
+Coordination with external vendors
+Specification change request
+Project budget review
+Creating progress report
+Risk response handling
+Project completion report
+Preparing results presentation
+Inter-departmental coordination meeting
+Planning internal event
+Internal email announcement
+Emergency contact via internal chat
+Internal newsletter article request
+Cooperation request from other department
+Progress report to supervisor
+Resolving inter-departmental conflicts
+Preparing company-wide announcement
+Internal survey request
+Service system failure
+Emergency customer response request
+Major defect found in deliverables
+Important company data loss
+Suspected unauthorized access
+Urgent media interview request
+Employee sudden sick leave
+Being late to important meeting
+Emergency contact with overseas branch
+Business continuity during disaster
+Business trip preparation
+Customer greeting after local arrival
+Last-minute meeting before presentation
+Client entertainment during trip
+Urgent call while traveling
+Creating trip report
+Customer follow-up after trip
+Cultural considerations for overseas trip
+Troubleshooting during trip
+Flight delay at airport
+Interview preparation
+Questions for candidates
+Sharing interview results
+Job offer notification
+Handling offer decline
+New employee training
+Employee transfer announcement
+Promotion announcement
+Performance review meeting
+HR policy revision explanation
+Budget planning
+Cost reduction proposal
+Sales report
+Responding to performance decline
+Investment planning discussion
+Board meeting preparation
+Shareholder meeting explanation
+Financial report creation
+Bank financing negotiation
+New business revenue forecast
+New system implementation explanation
+System failure initial response
+Server maintenance notice
+Software update notification
+Internal app usage explanation
+System inquiry response from employees
+Password reset request
+Security incident response
+External service integration setup
+Internal network malfunction report
