@@ -43,7 +43,7 @@ Response format (JSON):
 
     try {
       const response = await client.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini',
         messages: [
           {
             role: 'system',
@@ -55,8 +55,9 @@ Response format (JSON):
             content: prompt,
           },
         ],
-        temperature: 0.3,
         response_format: { type: 'json_object' },
+        reasoning_effort: 'minimal',
+        verbosity: 'low',
       })
 
       const content = response.choices[0]?.message?.content

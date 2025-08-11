@@ -147,7 +147,7 @@ Return only the sentence, nothing else.`
 
     try {
       const response = await client.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini',
         messages: [
           {
             role: 'system',
@@ -158,10 +158,8 @@ Return only the sentence, nothing else.`
             content: prompt,
           },
         ],
-        temperature: 0.9,
-        max_tokens: 100,
-        presence_penalty: 0.6,
-        frequency_penalty: 0.6,
+        reasoning_effort: 'minimal',
+        verbosity: 'low',
       })
 
       const sentence = response.choices[0]?.message?.content?.trim()
