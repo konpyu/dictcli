@@ -29,13 +29,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       return (
         <Box flexDirection="column" paddingX={2} paddingY={1}>
           <Text color="red" bold>
-            ⚠️ エラーが発生しました
+            ⚠️ An error occurred
           </Text>
           <Box marginTop={1}>
             <Text>{this.state.error?.message || 'Unknown error'}</Text>
           </Box>
           <Box marginTop={1}>
-            <Text color="gray">アプリケーションを再起動してください: Ctrl+C → npm run dev</Text>
+            <Text color="gray">Please restart the application: Ctrl+C → npm run dev</Text>
           </Box>
         </Box>
       )

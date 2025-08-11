@@ -192,7 +192,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, onSave }) => {
       {/* Topic */}
       <Box marginBottom={1}>
         <Text color={selectedField === 'topic' ? 'blue' : 'white'}>
-          Topic : <Text bold>{settings.topic}</Text> (←/→) 選択可能
+          Topic : <Text bold>{settings.topic}</Text> (←/→) to select
         </Text>
       </Box>
 

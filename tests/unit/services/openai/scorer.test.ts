@@ -30,7 +30,7 @@ describe('ScorerService', () => {
         {
           expected: 'going',
           actual: 'go',
-          explanation: '動詞の時制が違います',
+          explanation: 'Verb tense is incorrect',
         },
       ],
       alternatives: ['I will go to the beach', "I'm heading to the beach"],
@@ -62,7 +62,7 @@ describe('ScorerService', () => {
     expect(result.errors[0]).toEqual({
       expected: 'world',
       actual: 'word',
-      explanation: '単語が一致しません',
+      explanation: 'Words do not match',
     })
   })
 

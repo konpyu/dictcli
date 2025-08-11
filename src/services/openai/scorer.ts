@@ -41,7 +41,7 @@ Response format (JSON):
     {
       "expected": "word1",
       "actual": "word2",
-      "explanation": "日本語での説明"
+      "explanation": "Explanation in Japanese"
     }
   ],
   "alternatives": ["Alternative expression 1", "Alternative expression 2"]
@@ -97,7 +97,7 @@ Response format (JSON):
         errors.push({
           expected,
           actual,
-          explanation: '単語が一致しません',
+          explanation: 'Words do not match',
         })
       }
     }

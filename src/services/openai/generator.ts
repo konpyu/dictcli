@@ -76,7 +76,7 @@ export class ProblemGenerator {
   async generateProblem(level: Level, topic: Topic, wordCount: number): Promise<string> {
     const client = getOpenAIClient()
 
-    // ランダムに要素を選択
+    // Randomly select elements
     const REAL_TOPICS: Topic[] = [
       'EverydayLife',
       'Travel',

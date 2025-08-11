@@ -14,7 +14,7 @@ export interface Scene {
 export class SceneLoader {
   private scenesCache: Map<Topic, Scene[]> = new Map()
 
-  private getSceneFileName(topic: Topic, language: 'ja' | 'en'): string {
+  private getSceneFileName(topic: Topic): string {
     const topicFileMap: Record<Topic, string> = {
       EverydayLife: 'everyday_life',
       Travel: 'travel',
@@ -26,11 +26,11 @@ export class SceneLoader {
     }
 
     const baseName = topicFileMap[topic] || 'everyday_life'
-    return language === 'en' ? `${baseName}_en.txt` : `${baseName}.txt`
+    return `${baseName}_en.txt`
   }
 
-  private async loadSceneFile(topic: Topic, language: 'ja' | 'en'): Promise<string[]> {
-    const fileName = this.getSceneFileName(topic, language)
+  private async loadSceneFile(topic: Topic): Promise<string[]> {
+    const fileName = this.getSceneFileName(topic)
     const filePath = path.join(__dirname, '..', '..', 'scenes', fileName)
 
     try {
@@ -58,18 +58,14 @@ export class SceneLoader {
     // Handle Random topic by selecting a random actual topic
     const actualTopic = topic === 'Random' ? this.getRandomTopic() : topic
 
-    const [jaScenes, enScenes] = await Promise.all([
-      this.loadSceneFile(actualTopic, 'ja'),
-      this.loadSceneFile(actualTopic, 'en'),
-    ])
+    const enScenes = await this.loadSceneFile(actualTopic)
 
     const scenes: Scene[] = []
-    const minLength = Math.min(jaScenes.length, enScenes.length)
 
-    for (let i = 0; i < minLength; i++) {
+    for (let i = 0; i < enScenes.length; i++) {
       scenes.push({
         id: i + 1,
-        description: jaScenes[i],
+        description: enScenes[i], // Use English text for both fields
         descriptionEn: enScenes[i],
       })
     }
@@ -84,7 +80,7 @@ export class SceneLoader {
       // Fallback scene if no scenes are loaded
       return {
         id: 0,
-        description: '日常的な会話',
+        description: 'Daily conversation',
         descriptionEn: 'Daily conversation',
       }
     }

@@ -65,7 +65,7 @@ const ResultView: React.FC<ResultViewProps> = ({
         result.errors.map((error, index) => (
           <Box key={index} marginBottom={1}>
             <Text>
-              誤り: <Text color="red">{error.actual}</Text> →{' '}
+              Error: <Text color="red">{error.actual}</Text> →{' '}
               <Text color="green">{error.expected}</Text>{' '}
               <Text color="gray">({error.explanation})</Text>
             </Text>
@@ -73,14 +73,14 @@ const ResultView: React.FC<ResultViewProps> = ({
         ))
       ) : result.score === 100 ? (
         <Box marginBottom={1}>
-          <Text color="green">完璧です！全て正解しました。</Text>
+          <Text color="green">Perfect! All correct.</Text>
         </Box>
       ) : null}
 
       {/* Correct Sentence */}
       <Box marginBottom={1}>
         <Text>
-          正解:{' '}
+          Correct answer:{' '}
           <Text color="green" bold>
             {result.sentence}
           </Text>
@@ -91,7 +91,7 @@ const ResultView: React.FC<ResultViewProps> = ({
       {result.userInput && (
         <Box marginBottom={1}>
           <Text>
-            あなたの回答:{' '}
+            Your answer:{' '}
             <Text color={result.score === 100 ? 'green' : 'yellow'}>{result.userInput}</Text>
           </Text>
         </Box>
@@ -103,7 +103,7 @@ const ResultView: React.FC<ResultViewProps> = ({
           {result.alternatives.map((alt, index) => (
             <Box key={index}>
               <Text>
-                別解{index + 1}: <Text color="cyan">{alt}</Text>
+                Alternative {index + 1}: <Text color="cyan">{alt}</Text>
               </Text>
             </Box>
           ))}
