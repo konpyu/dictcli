@@ -3,36 +3,40 @@
 [![npm version](https://badge.fury.io/js/dictcli.svg)](https://badge.fury.io/js/dictcli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**DictCLI** は、日本人英語学習者向けのLLM駆動型ディクテーション練習ツールです。ターミナル上で動作し、OpenAI APIを使用して英文の生成、音声再生、日本語での採点フィードバックを提供します。
+**DictCLI** is an LLM-powered dictation practice tool for English learners worldwide. It runs in your terminal and uses OpenAI API to generate sentences, play audio, and provide detailed feedback in your native language.
 
 <p align="center">
-  <img src="https://github.com/yourusername/dictcli/assets/demo.gif" alt="DictCLI Demo" width="600">
+  <img src="docs/initial/img1.png" alt="DictCLI Learning View" width="700">
 </p>
 
-## ✨ 特徴
+<p align="center">
+  <img src="docs/initial/img2.png" alt="DictCLI Result View" width="700">
+</p>
 
-- 🤖 **LLM駆動**: OpenAI APIによる動的な問題生成
-- 🎯 **レベル別学習**: CEFR A1〜C2の6段階から選択可能
-- 🔊 **音声再生**: 6種類の音声（男性3・女性3）から選択
-- 📝 **日本語フィードバック**: 間違いを日本語で詳しく解説
-- ⚡ **高速な学習サイクル**: 1分未満でラウンドを完了
-- 🎨 **美しいTUI**: Ink v4による洗練されたターミナルUI
+## ✨ Features
 
-## 📋 必要要件
+- 🤖 **LLM-Powered**: Dynamic sentence generation using OpenAI API
+- 🎯 **Level-Based Learning**: Choose from 6 CEFR levels (A1-C2)
+- 🔊 **Voice Options**: 6 different voices (3 male, 3 female)
+- 🌍 **Multilingual Feedback**: Error explanations in 20+ languages (auto-detected)
+- ⚡ **Fast Learning Cycle**: Complete rounds in under a minute
+- 🎨 **Beautiful TUI**: Polished terminal UI with Ink v4
 
-- Node.js v20以上
-- macOS（音声再生機能のため）
-- OpenAI APIキー
+## 📋 Requirements
 
-## 🚀 インストール
+- Node.js v20 or higher
+- macOS (for audio playback feature)
+- OpenAI API key
 
-### グローバルインストール（推奨）
+## 🚀 Installation
+
+### Global Installation (Recommended)
 
 ```bash
 npm install -g dictcli
 ```
 
-### ローカルインストール
+### Local Installation
 
 ```bash
 git clone https://github.com/yourusername/dictcli.git
@@ -42,162 +46,172 @@ npm run build
 npm link
 ```
 
-インストール後、ターミナルで以下のように実行できます：
+After installation, you can run it from any terminal:
 
 ```bash
 dictcli
 ```
 
-アンインストールする場合：
+To uninstall:
 
 ```bash
 npm unlink -g dictcli
 ```
 
-## 🔧 セットアップ
+## 🔧 Setup
 
-### 1. OpenAI APIキーの設定
+### 1. Set OpenAI API Key
 
-OpenAI APIキーを環境変数に設定してください：
+Set your OpenAI API key as an environment variable:
 
 ```bash
 export OPENAI_API_KEY=your-api-key-here
 ```
 
-永続的に設定する場合は、シェルの設定ファイル（`.bashrc`、`.zshrc`など）に追加してください。
+To make it permanent, add it to your shell configuration file (`.bashrc`, `.zshrc`, etc.).
 
-### 2. APIキーの取得方法
+### 2. Getting an API Key
 
-1. [OpenAI Platform](https://platform.openai.com/)にアクセス
-2. アカウントを作成またはログイン
-3. [API Keys](https://platform.openai.com/api-keys)ページでキーを生成
-4. 生成されたキーをコピーして環境変数に設定
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Create an account or sign in
+3. Generate a key on the [API Keys](https://platform.openai.com/api-keys) page
+4. Copy the generated key and set it as an environment variable
 
-## 📖 使い方
+## 🌍 Language Support
 
-### 基本的な使い方
+DictCLI automatically detects your system language and provides feedback in your native language. Currently supports:
+
+- 🇯🇵 Japanese
+- 🇬🇧 English  
+- 🇨🇳 Chinese
+- 🇰🇷 Korean
+- 🇪🇸 Spanish
+- 🇫🇷 French
+- 🇩🇪 German
+- 🇮🇹 Italian
+- 🇵🇹 Portuguese
+- 🇷🇺 Russian
+- 🇸🇦 Arabic
+- 🇮🇳 Hindi
+- 🇹🇭 Thai
+- 🇻🇳 Vietnamese
+- And many more...
+
+The dictation audio remains in English while error explanations adapt to your system language.
+
+## 📖 Usage
+
+### Basic Usage
 
 ```bash
 dictcli
 ```
 
-デフォルト設定で起動します（ビジネス英語、A1レベル、10単語）。
+Starts with default settings (Business English, A1 level, 10 words).
 
-### オプション指定
+### With Options
 
 ```bash
 dictcli --topic Technology --level CEFR_B1 --words 15 --voice SARA
 ```
 
-### 利用可能なオプション
+### Available Options
 
-| オプション | 説明 | 選択肢 | デフォルト |
-|-----------|------|--------|------------|
-| `--topic` | 学習トピック | EverydayLife, Travel, Technology, Health, Entertainment, Business, Random | Business |
-| `--level` | 難易度レベル | CEFR_A1, CEFR_A2, CEFR_B1, CEFR_B2, CEFR_C1, CEFR_C2 | CEFR_A1 |
-| `--words` | 単語数 | 5-30 | 6 |
-| `--voice` | 音声の種類 | ALEX, SARA, EVAN, NOVA, NICK, FAYE | ALEX |
+| Option | Description | Choices | Default |
+|--------|-------------|---------|---------|
+| `--topic` | Learning topic | EverydayLife, Travel, Technology, Health, Entertainment, Business, Random | Business |
+| `--level` | Difficulty level | CEFR_A1, CEFR_A2, CEFR_B1, CEFR_B2, CEFR_C1, CEFR_C2 | CEFR_A1 |
+| `--words` | Word count | 5-30 | 6 |
+| `--voice` | Voice type | ALEX, SARA, EVAN, NOVA, NICK, FAYE | ALEX |
 
-### 音声の説明
+### Voice Descriptions
 
-| 名前 | 性別 | 特徴 |
-|------|------|------|
-| ALEX | 男性 | 親しみやすい標準的な声 |
-| SARA | 女性 | クリアで聞き取りやすい声 |
-| EVAN | 男性 | 落ち着いた声 |
-| NOVA | 女性 | モダンな声 |
-| NICK | 男性 | 深みのある声 |
-| FAYE | 女性 | 優しい声 |
+| Name | Gender | Characteristics |
+|------|--------|-----------------|
+| ALEX | Male | Friendly, standard voice |
+| SARA | Female | Clear and easy to understand |
+| EVAN | Male | Calm voice |
+| NOVA | Female | Modern voice |
+| NICK | Male | Deep voice |
+| FAYE | Female | Gentle voice |
 
-## 🎮 操作方法
+## 🎮 Controls
 
-### 学習画面での操作
+### Learning Screen
 
-- **英文入力**: 聞き取った英文をタイプして Enter
-- **スラッシュコマンド**: `/` を入力してコマンドメニューを表示
-  - `/replay` - 音声を再生
-  - `/settings` - 設定画面を開く
-  - `/giveup` - ヒント（空欄付き答え）を表示
-  - `/quit` - アプリを終了
+- **Type your answer**: Enter the sentence you hear and press Enter
+- **Slash commands**: Type `/` to open command menu
+  - `/replay` - Replay audio
+  - `/settings` - Open settings
+  - `/giveup` - Show hint (answer with blanks)
+  - `/quit` - Quit application
 
-### 結果画面での操作
+### Result Screen
 
-- **Enter** または **N** - 次の問題へ
-- **R** - 音声を再生
-- **S** - 設定画面を開く
-- **Q** - アプリを終了
+- **Enter** or **N** - Next question
+- **R** - Replay audio
+- **S** - Open settings
+- **Q** - Quit application
 
-### 設定画面での操作
+### Settings Screen
 
-- **↑↓** - 項目を選択
-- **←→** - 値を変更（Voice, Level, Topic）
-- **-+** - 値を増減（Word Count）
-- **Enter** - 保存して次の問題へ
-- **Esc** - キャンセル
+- **↑↓** - Select item
+- **←→** - Change value (Voice, Level, Topic)
+- **-+** - Increase/decrease (Word Count)
+- **Enter** - Save and continue to next question
+- **Esc** - Cancel
 
-## 💡 学習のヒント
+## 💡 Learning Tips
 
-### 効果的な学習方法
+### Effective Study Methods
 
-1. **レベル選択**: 80%程度正解できるレベルから始める
-2. **繰り返し練習**: 同じトピックで繰り返し練習して専門用語に慣れる
-3. **速度調整**: `/settings`で再生速度を調整（0.8x〜1.2x）
-4. **エラー分析**: 日本語の解説をしっかり読んで間違いのパターンを理解
+1. **Level Selection**: Start with a level where you can answer about 80% correctly
+2. **Repetitive Practice**: Practice the same topic repeatedly to master specialized vocabulary
+3. **Speed Adjustment**: Adjust playback speed in `/settings` (0.8x-1.2x)
+4. **Error Analysis**: Carefully read explanations in your native language to understand error patterns
 
-### レベルの目安
+### Level Guidelines
 
-- **A1**: 基本的な単語と簡単な文
-- **A2**: 日常的な表現と基本的な文法
-- **B1**: 仕事や旅行で使う実用的な表現
-- **B2**: より複雑な文法と語彙
-- **C1**: 流暢で自然な表現
-- **C2**: ネイティブレベルの高度な表現
+- **A1**: Basic words and simple sentences
+- **A2**: Everyday expressions and basic grammar
+- **B1**: Practical expressions for work and travel
+- **B2**: More complex grammar and vocabulary
+- **C1**: Fluent and natural expressions
+- **C2**: Native-level advanced expressions
 
-## 🐛 トラブルシューティング
+## 🐛 Troubleshooting
 
-### よくある問題
+### Common Issues
 
-**Q: 音声が再生されない**
-- A: macOSでのみ動作します。他のOSでは音声機能は利用できません。
+**Q: Audio doesn't play**
+- A: This only works on macOS. Audio features are not available on other OS.
 
-**Q: "OPENAI_API_KEY environment variable is required" エラー**
-- A: 環境変数が設定されているか確認してください：
+**Q: "OPENAI_API_KEY environment variable is required" error**
+- A: Verify that the environment variable is set:
   ```bash
   echo $OPENAI_API_KEY
   ```
 
-**Q: APIエラーが頻発する**
-- A: OpenAIのAPIクレジットが残っているか確認してください。
+**Q: Frequent API errors**
+- A: Check if you have remaining OpenAI API credits.
 
-**Q: 文字化けする**
-- A: ターミナルがUTF-8をサポートしているか確認してください。
+**Q: Characters are garbled**
+- A: Make sure your terminal supports UTF-8 and has fonts for your language installed.
 
-### デバッグモード
+### Debug Mode
 
-問題が解決しない場合は、デバッグモードで詳細情報を確認できます：
+If problems persist, you can check detailed information in debug mode:
 
 ```bash
 DICTCLI_DEBUG=true dictcli
 ```
 
-## 🤝 コントリビューション
+## 🤝 Contributing
 
-バグ報告や機能提案は [GitHub Issues](https://github.com/yourusername/dictcli/issues) からお願いします。
+Please report bugs and suggest features via [GitHub Issues](https://github.com/yourusername/dictcli/issues).
 
-プルリクエストも歓迎です！
+Pull requests are welcome!
 
-## 📄 ライセンス
+## 📄 License
 
-MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照してください。
-
-## 🙏 謝辞
-
-- [Ink](https://github.com/vadimdemedes/ink) - 美しいCLI UIフレームワーク
-- [OpenAI](https://openai.com/) - 強力なAI API
-- [Zustand](https://github.com/pmndrs/zustand) - シンプルな状態管理
-
----
-
-<p align="center">
-  Made with ❤️ for Japanese English Learners
-</p>
+MIT License - See [LICENSE](LICENSE) file for details.
