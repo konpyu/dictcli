@@ -27,6 +27,12 @@ Analyze the student's answer and provide:
 3. List of errors with Japanese explanations
 4. 2-3 alternative correct expressions in English
 
+IMPORTANT SCORING RULES:
+- Do NOT penalize missing or extra periods (.) or exclamation marks (!) at the end of sentences
+- Both "Hello." and "Hello" are correct, as are "Great!" and "Great"
+- Focus on word accuracy and spelling, not end-of-sentence punctuation
+- Other punctuation errors within sentences (commas, question marks, etc.) should still be considered
+
 Response format (JSON):
 {
   "score": 85,
