@@ -1,5 +1,5 @@
 {
-  "name": "dictcli",
+  "name": "@konpyu/dictcli",
   "version": "1.0.0",
   "description": "LLM-First Dictation TUI App for Japanese English learners",
   "type": "module",
