@@ -1,7 +1,7 @@
 {
   "name": "@konpyu/dictcli",
   "version": "1.0.0",
-  "description": "LLM-First Dictation TUI App for Japanese English learners",
+  "description": "LLM-First Dictation TUI App for English learners",
   "type": "module",
   "bin": {
     "dictcli": "dist/cli.js"

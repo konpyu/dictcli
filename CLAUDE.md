@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Running the Application
 - Development: `npm run dev` or with options: `npm run dev -- --topic Technology --level CEFR_B1 --words 15`
 - Production: Build first (`npm run build`), then run `./dist/cli.js`
-- CLI options: `--topic <topic> --level <level> --words <number> --voice <voice>`
+- CLI options: `--topic <topic> --level <level> --words <number> --voice <voice> --speed <speed>`
 
 ### Testing
 - Run single test: `npm test -- tests/unit/components/App.test.tsx`
@@ -57,7 +57,7 @@ Due to Ink v4 incompatibility with React 18's `useSyncExternalStore`, this proje
 ### OpenAI Integration Details
 - **Problem Generation**: Uses gpt-4o-mini with CEFR levels (A1-C2) and topics
 - **TTS**: Uses OpenAI TTS with voice mapping (ALEX→echo, SARA→shimmer, etc.) - see `VOICE_MAPPING` in types
-- **Scoring**: Uses gpt-4o-mini for Japanese-language error explanations and WER calculation
+- **Scoring**: Uses gpt-4o-mini for multilingual error explanations and WER calculation
 - **Caching**: TTS audio files cached with 15-minute TTL in temp directory
 
 ## Testing Strategy
@@ -115,7 +115,7 @@ Three main views: 'learning' | 'result' | 'settings'
 ### Error Handling
 - All API calls wrapped in try/catch with debug logging
 - Audio errors logged but don't crash the app
-- User-facing errors shown in Japanese when appropriate
+- User-facing errors shown in user's system language when appropriate
 
 ### File Structure Standards
 - Components: PascalCase, default exports
