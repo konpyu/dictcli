@@ -4,7 +4,7 @@
   "description": "LLM-First Dictation TUI App for Japanese English learners",
   "type": "module",
   "bin": {
-    "dictcli": "./dist/cli.js"
+    "dictcli": "dist/cli.js"
   },
   "files": [
     "dist/**/*.js",
