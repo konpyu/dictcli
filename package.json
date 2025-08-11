@@ -2,24 +2,26 @@
   "name": "dictcli",
   "version": "1.0.0",
   "description": "LLM-First Dictation TUI App for Japanese English learners",
-  "main": "dist/index.js",
   "type": "module",
   "bin": {
     "dictcli": "./dist/cli.js"
   },
   "files": [
-    "dist",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "scenes",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
   ],
+  "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/dictcli.git"
+    "url": "git+https://github.com/konpyu/dictcli.git"
   },
-  "homepage": "https://github.com/yourusername/dictcli#readme",
+  "homepage": "https://github.com/konpyu/dictcli#readme",
   "bugs": {
-    "url": "https://github.com/yourusername/dictcli/issues"
+    "url": "https://github.com/konpyu/dictcli/issues"
   },
   "scripts": {
     "dev": "tsx src/cli.tsx",
@@ -30,7 +32,8 @@
     "test": "vitest --run",
     "test:watch": "vitest watch",
     "lint": "eslint src --ext .ts,.tsx",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "dictation",
@@ -45,13 +48,14 @@
     "language-learning",
     "education"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "konpyu <konpyu@gmail.com>",
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@types/uuid": "^10.0.0",
     "@types/node": "^24.1.0",
     "@types/play-sound": "^1.1.2",
     "@types/react": "^19.1.9",
@@ -69,7 +73,6 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@types/uuid": "^10.0.0",
     "commander": "^14.0.0",
     "ink": "^4.4.1",
     "openai": "^5.12.2",
