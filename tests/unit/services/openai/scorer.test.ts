@@ -59,11 +59,10 @@ describe('ScorerService', () => {
     expect(result.score).toBe(50)
     expect(result.wer).toBe(0.5)
     expect(result.errors).toHaveLength(1)
-    expect(result.errors[0]).toEqual({
-      expected: 'world',
-      actual: 'word',
-      explanation: 'Words do not match',
-    })
+    expect(result.errors[0].expected).toBe('world')
+    expect(result.errors[0].actual).toBe('word')
+    // explanation can be in any language based on locale
+    expect(result.errors[0].explanation).toBeTruthy()
   })
 
   it('should create round from scoring result', () => {
