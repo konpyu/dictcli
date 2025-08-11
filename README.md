@@ -30,16 +30,24 @@
 
 ## 🚀 Installation
 
+### Quick Start (No Installation)
+
+Run directly with npx:
+
+```bash
+npx @konpyu/dictcli
+```
+
 ### Global Installation (Recommended)
 
 ```bash
-npm install -g dictcli
+npm install -g @konpyu/dictcli
 ```
 
-### Local Installation
+### Local Development
 
 ```bash
-git clone https://github.com/yourusername/dictcli.git
+git clone https://github.com/konpyu/dictcli.git
 cd dictcli
 npm install
 npm run build
@@ -69,6 +77,8 @@ export OPENAI_API_KEY=your-api-key-here
 ```
 
 To make it permanent, add it to your shell configuration file (`.bashrc`, `.zshrc`, etc.).
+
+⚠️ **Note**: The app starts generating content immediately upon launch, which will incur OpenAI API costs (typically less than $0.01 per session).
 
 ### 2. Getting an API Key
 
@@ -208,7 +218,7 @@ DICTCLI_DEBUG=true dictcli
 
 ## 🤝 Contributing
 
-Please report bugs and suggest features via [GitHub Issues](https://github.com/yourusername/dictcli/issues).
+Please report bugs and suggest features via [GitHub Issues](https://github.com/konpyu/dictcli/issues).
 
 Pull requests are welcome!
 
